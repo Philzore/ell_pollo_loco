@@ -9,22 +9,25 @@ function init() {
 
 window.addEventListener('keydown', (event) => {
     let pressedKey = event;
-
+    
     switch (pressedKey['code']) {
         case 'ArrowUp':
-            keyboard.up = true ;
+            keyboard.up = true;
             break;
         case 'ArrowDown':
-            keyboard.down = true ;
+            keyboard.down = true;
             break;
         case 'ArrowLeft':
-            keyboard.left = true ;
+            keyboard.left = true;
             break;
         case 'ArrowRight':
-            keyboard.right = true ;
+            keyboard.right = true;
             break;
         case 'Space':
-            keyboard.space = true ;
+            keyboard.space = true;
+            break;
+        case 'd':
+            keyboard.d = true;
             break;
         default:
             break;
@@ -36,19 +39,22 @@ window.addEventListener('keyup', (event) => {
 
     switch (pressedKey['code']) {
         case 'ArrowUp':
-            keyboard.up = false ;
+            keyboard.up = false;
             break;
         case 'ArrowDown':
-            keyboard.down = false ;
+            keyboard.down = false;
             break;
         case 'ArrowLeft':
-            keyboard.left = false ;
+            keyboard.left = false;
             break;
         case 'ArrowRight':
-            keyboard.right = false ;
+            keyboard.right = false;
             break;
         case 'Space':
-            keyboard.space = false ;
+            keyboard.space = false;
+            break;
+        case 'd':
+            keyboard.d = false;
             break;
         default:
             break;
