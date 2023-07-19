@@ -8,7 +8,7 @@ class World {
     camera_x = 0;
 
     statusBar = new StatusBar();
-    throwableObject = [new ThrowableObject()];
+    throwableObject = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -16,7 +16,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
     }
 
     setWorld() {
@@ -24,15 +24,29 @@ class World {
         this.character.world = this;
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy) ;
-                }
-            });
+            //chekc collision
+            this.checkCollision();
+            //check key d for throw
+            this.checkThrow();
         }, 200);
+    }
+
+    checkCollision() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkThrow() {
+        if (this.keyboard.d) {
+            let bootle = new ThrowableObject(this.character.x +100, this.character.y +100);
+            this.throwableObject.push(bootle);
+        }
     }
 
     draw() {
@@ -74,8 +88,8 @@ class World {
             this.flipImage(mo);
         }
 
-        mo.draw(this.ctx) ;
-        mo.drawFrame(this.ctx) ;
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
 
         if (mo.reverse) {
             this.flipImageBack(mo);

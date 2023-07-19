@@ -1,9 +1,9 @@
 class MoveableObject extends DrawableObject {
-   
+
     speed = 0.3;
     reverse = false;
-    energy = 100 ;
-    lastHit = 0 ;
+    energy = 100;
+    lastHit = 0;
 
     speedY = 0;
     acceleration = 2;
@@ -15,7 +15,7 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    
+
 
     moveRight() {
         this.x += this.speed;
@@ -37,33 +37,37 @@ class MoveableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        return this.y < 130;
+        if (this instanceof ThrowableObject) { //throwableObject allways fall
+            return true;
+        } else {
+            return this.y < 130;
+        }
     }
 
     isColliding(obj) {
         return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
             (this.y /*+ this.offsetY*/ + this.height) >= obj.y &&
             (this.y /*+ this.offsetY*/) <= (obj.y + obj.height); //&&
-            //obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+        //obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     }
 
     hit() {
         this.energy -= 10;
         if (this.energy < 0) {
-            this.energy = 0 ;
+            this.energy = 0;
         }
         else {
-            this.lastHit = new Date().getTime() ;
+            this.lastHit = new Date().getTime();
         }
     }
 
     isHurt() {
-        let timePassed = new Date().getTime() - this.lastHit ; //difference in ms
-        timePassed = timePassed / 1000 ; //difference in seconds
-        return timePassed < 1 ; 
+        let timePassed = new Date().getTime() - this.lastHit; //difference in ms
+        timePassed = timePassed / 1000; //difference in seconds
+        return timePassed < 1;
     }
 
     isDead() {
-        return this.energy == 0 ;
+        return this.energy == 0;
     }
 }
