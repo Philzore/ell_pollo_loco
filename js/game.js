@@ -59,3 +59,10 @@ window.addEventListener('keyup', (event) => {
             break;
     }
 });
+
+function removeStartScreen() {
+    initLevel();
+    document.getElementById('start-screen').classList.add('d-none');
+    document.getElementById('canvas').classList.remove('d-none');
+    init();
+}

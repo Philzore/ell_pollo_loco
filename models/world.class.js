@@ -10,6 +10,9 @@ class World {
     statusBar = new StatusBar();
     throwableObject = [];
 
+    backround = new Image();
+
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -44,7 +47,7 @@ class World {
 
     checkThrow() {
         if (this.keyboard.d) {
-            let bootle = new ThrowableObject(this.character.x +100, this.character.y +100);
+            let bootle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObject.push(bootle);
         }
     }
