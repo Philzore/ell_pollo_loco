@@ -6,7 +6,21 @@ level1 = new level(
         new Chicken(),
         new Chicken(),
         new Chicken(),
-        new Endboss(),
+        new Endboss()
+    ],
+    [
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins()
+    ],
+    [
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle()
     ],
     [
         new Cloud()

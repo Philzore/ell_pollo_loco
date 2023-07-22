@@ -66,3 +66,8 @@ function removeStartScreen() {
     document.getElementById('canvas').classList.remove('d-none');
     init();
 }
+
+function showEndScreen() {
+    document.getElementById('canvas').classList.add('d-none');
+    document.getElementById('end-screen').classList.remove('d-none');
+}

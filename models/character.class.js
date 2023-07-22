@@ -3,6 +3,8 @@ class Character extends MoveableObject {
     width = 150;
     y = 0; //130
     speed = 10;
+    coinStatus = 0;
+    bottleStatus = 0 ;
 
     IMAGES_WALKING = [
         '../img/2_character_pepe/2_walk/W-21.png',
@@ -96,6 +98,6 @@ class Character extends MoveableObject {
     }
 
     jump() {
-        this.speedY = 20;
+        this.speedY = 30;
     }
 }

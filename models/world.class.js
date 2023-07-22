@@ -8,10 +8,9 @@ class World {
     camera_x = 0;
 
     statusBar = new StatusBar();
+    statusBarCoins = new StatusBarCoins();
+    statusBarBottle = new StatusBarBottle();
     throwableObject = [];
-
-    backround = new Image();
-
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,11 +36,56 @@ class World {
     }
 
     checkCollision() {
+        this.checkCollisionEnemy();
+        this.checkCollisionCoin();
+        this.checkCollisionBottle();
+    }
+
+    checkCollisionEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
+        });
+    }
+
+    checkCollisionCoin() {
+        let i = 0;
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+
+                this.character.coinStatus += 20;
+
+                this.level.coins.splice(i, 1);
+
+                this.statusBarCoins.setPercentage(this.character.coinStatus);
+
+                if (this.character.coinStatus > 100) {
+                    this.character.coinStatus = 100;
+                }
+                i = 0;
+            }
+            i++;
+        });
+    }
+
+    checkCollisionBottle() {
+        let i = 0 ;
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                this.character.bottleStatus += 20;
+
+                this.level.bottles.splice(i, 1);
+               
+                this.statusBarBottle.setPercentage(this.character.bottleStatus);
+
+                if (this.character.bottleStatus > 100) {
+                    this.character.bottleStatus = 100;
+                }
+                i = 0 ;
+            }
+            i++ ;
         });
     }
 
@@ -64,9 +108,13 @@ class World {
         this.ctx.translate(-this.camera_x, 0); // back
         // --- space for fixed objects ---
         this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottle);
         this.ctx.translate(this.camera_x, 0); // forward
 
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObject);
         this.addObjectsToMap(this.level.clouds);
 
@@ -83,6 +131,7 @@ class World {
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
+
         });
     }
 

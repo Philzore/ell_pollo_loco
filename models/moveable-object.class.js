@@ -15,8 +15,6 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
     }
 
-
-
     moveRight() {
         this.x += this.speed;
         this.reverse = false;
@@ -49,6 +47,7 @@ class MoveableObject extends DrawableObject {
             (this.y /*+ this.offsetY*/ + this.height) >= obj.y &&
             (this.y /*+ this.offsetY*/) <= (obj.y + obj.height); //&&
         //obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+
     }
 
     hit() {
@@ -59,6 +58,7 @@ class MoveableObject extends DrawableObject {
         else {
             this.lastHit = new Date().getTime();
         }
+
     }
 
     isHurt() {
