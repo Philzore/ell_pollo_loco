@@ -12,6 +12,10 @@ class World {
     statusBarBottle = new StatusBarBottle();
     throwableObject = [];
 
+    coinSound = new Audio('../audio/coin.mp3');
+    bottleSound = new Audio('../audio/bottle.mp3');
+
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -42,19 +46,26 @@ class World {
     }
 
     checkCollisionEnemy() {
+        let i = 0;
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
+            if (this.character.isCollidingTop(enemy)) {
+                this.level.enemies.splice(i, 1);
+                i = 0;
+            }
+            i++;
         });
     }
 
     checkCollisionCoin() {
         let i = 0;
+        //this.coinSound.pause();
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
-
+                this.coinSound.play();
                 this.character.coinStatus += 20;
 
                 this.level.coins.splice(i, 1);
@@ -71,28 +82,35 @@ class World {
     }
 
     checkCollisionBottle() {
-        let i = 0 ;
+        let i = 0;
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.bottleStatus += 20;
-
+                this.bottleSound.play();
                 this.level.bottles.splice(i, 1);
-               
+
                 this.statusBarBottle.setPercentage(this.character.bottleStatus);
 
                 if (this.character.bottleStatus > 100) {
                     this.character.bottleStatus = 100;
                 }
-                i = 0 ;
+                i = 0;
             }
-            i++ ;
+            i++;
         });
     }
 
     checkThrow() {
         if (this.keyboard.d) {
-            let bootle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObject.push(bootle);
+            
+            if (this.character.bottleStatus > 0) {
+                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                debugger;
+                this.throwableObject.push(bottle);
+                this.character.bottleStatus -= 20;
+                this.statusBarBottle.setPercentage(this.character.bottleStatus);
+                console.log(this.character.bottleStatus);
+            }
         }
     }
 

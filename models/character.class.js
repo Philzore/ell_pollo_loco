@@ -1,7 +1,7 @@
 class Character extends MoveableObject {
     height = 300;
     width = 150;
-    y = 0; //130
+    y = 0; 
     speed = 10;
     coinStatus = 0;
     bottleStatus = 0 ;
@@ -48,6 +48,10 @@ class Character extends MoveableObject {
 
     constructor() {
         super().loadImage('../img/2_character_pepe/2_walk/W-21.png');
+        this.offset.top = 100 ;
+        this.offset.left = 50 ;
+        this.offset.right = 50 ;
+        this.offset.bottom = 20 ;
 
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);

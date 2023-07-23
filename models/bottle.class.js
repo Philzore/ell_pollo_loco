@@ -6,5 +6,10 @@ class Bottle extends MoveableObject {
         this.x = 500 + Math.random() * 1500;
         this.y = 330 ;
         this.height = 100;
+
+        this.offset.top = 10 ;
+        this.offset.left = 25 ;
+        this.offset.right = 25 ;
+        this.offset.bottom = 10 ;
     }
 }
