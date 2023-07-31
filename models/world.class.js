@@ -36,7 +36,7 @@ class World {
             this.checkCollision();
             //check key d for throw
             this.checkThrow();
-        }, 50);
+        }, 150);
     }
 
     checkCollision() {

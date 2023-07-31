@@ -9,6 +9,8 @@ class MoveableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2;
 
+    intervalId = 0 ;
+
     offset = {
         top: 0,
         right: 0,
@@ -98,4 +100,6 @@ class MoveableObject extends DrawableObject {
     isDead() {
         return this.energy == 0;
     }
+
+
 }
