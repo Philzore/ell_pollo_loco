@@ -4,6 +4,7 @@ class MoveableObject extends DrawableObject {
     reverse = false;
     energy = 100;
     lastHit = 0;
+    lastMove = 0;
 
     speedY = 0;
     acceleration = 2;
@@ -15,6 +16,8 @@ class MoveableObject extends DrawableObject {
         left: 0
     }
 
+    onCollisionCourse;
+
     playAnimation(images) {
         let i = this.currentImage % images.length; // let i = 0 % 6 
         let path = images[i];
@@ -25,11 +28,20 @@ class MoveableObject extends DrawableObject {
     moveRight() {
         this.x += this.speed;
         this.reverse = false;
-
     }
 
     moveLeft() {
         this.x -= this.speed;
+    }
+
+    getTimeLastMove() {
+        this.lastMove = new Date().getTime();
+    }
+
+    checkSnooze() {
+        let timePassed = new Date().getTime() - this.lastMove; //difference in ms
+        timePassed = timePassed / 1000; //difference in seconds
+        return timePassed > 3;
     }
 
     applyGravity() {
@@ -50,7 +62,9 @@ class MoveableObject extends DrawableObject {
     }
 
     isCollidingTop(obj) {
-        return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) && ((this.y + this.height) >= (obj.y) && (this.y) <= (obj.y + obj.height) && this.isAboveGround());
+        return (this.x + this.width - this.offset.right) >= obj.x + obj.offset.left && this.x + this.offset.left <= (obj.x + obj.width - obj.offset.right) && 
+        (this.y  + this.height - this.offset.bottom) >= obj.y + obj.offset.top && (this.y + this.offset.top) <= (obj.y + obj.height - obj.offset.bottom) && 
+        (this.onCollisionCourse == 'y' );
 
     }
 

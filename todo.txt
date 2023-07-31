@@ -2,8 +2,9 @@ start screen --!--
 musik + sounds
 coins einsammeln --!--
 flaschen einsammeln --!--
-flaschen nur werfen, wenn vorhanden
+flaschen nur werfen, wenn vorhanden --!--
 collision
+flaschen auch in andere Richtugn werfen
 endgegner besiegen
 game-over screen
 fullscreen

@@ -36,7 +36,7 @@ class World {
             this.checkCollision();
             //check key d for throw
             this.checkThrow();
-        }, 200);
+        }, 50);
     }
 
     checkCollision() {
@@ -48,14 +48,23 @@ class World {
     checkCollisionEnemy() {
         let i = 0;
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && this.character.onCollisionCourse == 'x') {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
             if (this.character.isCollidingTop(enemy)) {
-                this.level.enemies.splice(i, 1);
+                //debugger;
+                this.level.enemies[i].img.src = '../img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
+
+                // this.level.enemies.splice(i, 1);
                 i = 0;
             }
+            this.throwableObject.forEach((bottle) => {
+                if (bottle.isColliding(enemy)) {
+                    console.log('Flaschen treffer ' + enemy);
+                    this.level.enemies.splice(i, 1);
+                }
+            });
             i++;
         });
     }
@@ -102,14 +111,17 @@ class World {
 
     checkThrow() {
         if (this.keyboard.d) {
-            
+
             if (this.character.bottleStatus > 0) {
-                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-                debugger;
+                let bottle;
+                if (this.character.reverse == true) {
+                    bottle = new ThrowableObject(this.character.x , this.character.y + 100,true);
+                } else if (this.character.reverse == false) {
+                    bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100,false);
+                }
                 this.throwableObject.push(bottle);
                 this.character.bottleStatus -= 20;
                 this.statusBarBottle.setPercentage(this.character.bottleStatus);
-                console.log(this.character.bottleStatus);
             }
         }
     }
