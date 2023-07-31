@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let intervalIds = [] ;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -70,4 +71,13 @@ function removeStartScreen() {
 function showEndScreen() {
     document.getElementById('canvas').classList.add('d-none');
     document.getElementById('end-screen').classList.remove('d-none');
+}
+
+function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time) ;
+    intervalIds.push(id);
+}
+
+function stopGame() {
+    intervalIds.forEach(clearInterval);
 }

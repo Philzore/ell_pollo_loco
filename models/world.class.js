@@ -36,7 +36,7 @@ class World {
             this.checkCollision();
             //check key d for throw
             this.checkThrow();
-        }, 200);
+        }, 150);
     }
 
     checkCollision() {
@@ -105,7 +105,6 @@ class World {
             
             if (this.character.bottleStatus > 0) {
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-                debugger;
                 this.throwableObject.push(bottle);
                 this.character.bottleStatus -= 20;
                 this.statusBarBottle.setPercentage(this.character.bottleStatus);

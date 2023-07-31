@@ -5,6 +5,13 @@ class Endboss extends MoveableObject {
     y = 50 ;
     x = 2500 ;
 
+    offset = {
+        top: 65,
+        right: 0,
+        bottom: 0,
+        left: 0
+    }
+
     IMAGES_WALKING = [
         '../img/4_enemie_boss_chicken/1_walk/G1.png',
         '../img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -15,7 +22,7 @@ class Endboss extends MoveableObject {
     constructor() {
         super().loadImage('../img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.IMAGES_WALKING);
-        //this.x = 2500 ;
+        
         this.animate();
     }
 

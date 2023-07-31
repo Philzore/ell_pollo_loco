@@ -1,10 +1,17 @@
 class Character extends MoveableObject {
     height = 300;
     width = 150;
-    y = 0; 
+    y = 0;
     speed = 10;
     coinStatus = 0;
-    bottleStatus = 0 ;
+    bottleStatus = 0;
+
+    offset = {
+        top: 100,
+        right: 50,
+        bottom: 20,
+        left: 50
+    }
 
     IMAGES_WALKING = [
         '../img/2_character_pepe/2_walk/W-21.png',
@@ -48,10 +55,6 @@ class Character extends MoveableObject {
 
     constructor() {
         super().loadImage('../img/2_character_pepe/2_walk/W-21.png');
-        this.offset.top = 100 ;
-        this.offset.left = 50 ;
-        this.offset.right = 50 ;
-        this.offset.bottom = 20 ;
 
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
@@ -82,7 +85,7 @@ class Character extends MoveableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isDead()){
+            if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             }
             else if (this.isHurt()) {
@@ -90,7 +93,7 @@ class Character extends MoveableObject {
             }
             else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
-            } else  {
+            } else {
                 if (this.world.keyboard.right || this.world.keyboard.left) {
                     //walking
                     this.playAnimation(this.IMAGES_WALKING);
