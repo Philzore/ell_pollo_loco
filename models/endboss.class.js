@@ -1,10 +1,9 @@
 class Endboss extends MoveableObject {
 
     height = 400;
-    width = 250 ;
-    y = 50 ;
-    x = 2500 ;
-    health = 100 ;
+    width = 250;
+    y = 50;
+    x = 2500;
 
     offset = {
         top: 65,
@@ -12,6 +11,8 @@ class Endboss extends MoveableObject {
         bottom: 0,
         left: 0
     }
+
+    firstContactSound = new Audio('../audio/chicken_endboss.mp3');
 
     IMAGES_WALKING = [
         '../img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -61,16 +62,33 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
-        this.offset.top = 75 ;
-        this.offset.left = 25 ;
-        this.offset.right = 10 ;
-        this.offset.bottom = 20 ;
+
         this.animate();
     }
 
-    animate(){
-        setInterval(() =>{
-            this.playAnimation(this.IMAGES_WALKING);
-        },100);
+    animate() {
+        let i = 0;
+        let bossFirstContact = false ;
+
+        setInterval(() => {
+            if (i < 20) {
+                this.playAnimation(this.IMAGES_ALERT);
+            } 
+            else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
+            else {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+
+            i++ ;
+
+            if (world.character.x > 2000 && !bossFirstContact) {
+                i = 0 ;
+                bossFirstContact = true ;
+                this.firstContactSound.play();
+            }
+
+        }, 100);
     }
 }

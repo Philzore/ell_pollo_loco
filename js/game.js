@@ -2,10 +2,14 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let intervalIds = [] ;
+let muted = false ;
+
+let backroundMusic = new Audio('../audio/backround.mp3');
+let looseSound = new Audio('../audio/loose.mp3');
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, muted);
 }
 
 window.addEventListener('keydown', (event) => {
@@ -66,11 +70,15 @@ function removeStartScreen() {
     document.getElementById('start-screen').classList.add('d-none');
     document.getElementById('canvas').classList.remove('d-none');
     init();
+    backroundMusic.play();
 }
 
-function showEndScreen() {
-    document.getElementById('canvas').classList.add('d-none');
+function endGame() {
+    //document.getElementById('canvas').classList.add('d-none');
     document.getElementById('end-screen').classList.remove('d-none');
+    backroundMusic.pause();
+    looseSound.play();
+    //clear intervals
 }
 
 function setStoppableInterval(fn, time) {
@@ -80,4 +88,17 @@ function setStoppableInterval(fn, time) {
 
 function stopGame() {
     intervalIds.forEach(clearInterval);
+}
+
+function soundOff() {
+    //change picture
+    document.getElementById('sound-off').src = '../img/0_hud/volume.svg';
+    if (document.getElementById('start-screen').classList.contains('d-none')){
+        world.muted = true ;
+    }
+    if (muted){
+        document.getElementById('sound-off').src = '../img/0_hud/volume-off.svg';
+    }
+    muted = true ;
+    backroundMusic.pause();
 }

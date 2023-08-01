@@ -10,16 +10,22 @@ class World {
     statusBar = new StatusBar();
     statusBarCoins = new StatusBarCoins();
     statusBarBottle = new StatusBarBottle();
+    statusBarEndboss = new StatusBarEndboss();
     throwableObject = [];
+    bottle;
 
     coinSound = new Audio('../audio/coin.mp3');
     bottleSound = new Audio('../audio/bottle.mp3');
+    chickenHitSound = new Audio('../audio/chicken.mp3');
+
+    muted ;
 
 
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard , muted) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.muted = muted ;
         this.draw();
         this.setWorld();
         this.run();
@@ -36,6 +42,10 @@ class World {
             this.checkCollision();
             //check key d for throw
             this.checkThrow();
+            //check dead
+            if (this.character.isDead()) {
+                endGame();
+            }
         }, 150);
     }
 
@@ -53,16 +63,23 @@ class World {
                 this.statusBar.setPercentage(this.character.energy);
             }
             if (this.character.isCollidingTop(enemy)) {
-                //debugger;
                 this.level.enemies[i].img.src = '../img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
+                this.character.jump();
+                this.chickenHitSound.play();
+                this.level.enemies.splice(i, 1);
 
-                // this.level.enemies.splice(i, 1);
                 i = 0;
             }
             this.throwableObject.forEach((bottle) => {
                 if (bottle.isColliding(enemy)) {
-                    console.log('Flaschen treffer ' + enemy);
-                    this.level.enemies.splice(i, 1);
+                    console.log('Flaschen treffer');
+                    this.throwableObject.splice(bottle, 1);
+
+                    enemy.hit();
+
+                    if (enemy.isDead()) {
+                        this.level.enemies.splice(i, 1);
+                    }
                 }
             });
             i++;
@@ -71,10 +88,12 @@ class World {
 
     checkCollisionCoin() {
         let i = 0;
-        //this.coinSound.pause();
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
-                this.coinSound.play();
+                if (!this.muted) {
+                    this.coinSound.play();
+                }
+
                 this.character.coinStatus += 20;
 
                 this.level.coins.splice(i, 1);
@@ -95,7 +114,9 @@ class World {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.bottleStatus += 20;
-                this.bottleSound.play();
+                if (!this.muted) {
+                    this.bottleSound.play();
+                }
                 this.level.bottles.splice(i, 1);
 
                 this.statusBarBottle.setPercentage(this.character.bottleStatus);
@@ -113,11 +134,11 @@ class World {
         if (this.keyboard.d) {
 
             if (this.character.bottleStatus > 0) {
-                let bottle;
+                //let bottle;
                 if (this.character.reverse == true) {
-                    bottle = new ThrowableObject(this.character.x , this.character.y + 100,true);
+                    bottle = new ThrowableObject(this.character.x, this.character.y + 100, true);
                 } else if (this.character.reverse == false) {
-                    bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100,false);
+                    bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, false);
                 }
                 this.throwableObject.push(bottle);
                 this.character.bottleStatus -= 20;
@@ -140,6 +161,7 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottle);
+        this.addToMap(this.statusBarEndboss);
         this.ctx.translate(this.camera_x, 0); // forward
 
         this.addObjectsToMap(this.level.enemies);

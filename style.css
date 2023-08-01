@@ -21,6 +21,55 @@ canvas {
     display: block;
 }
 
+.main-screen {
+    position: relative;
+    display: block;
+}
+
+.setting-btns {
+    position: absolute;
+    background: content-box;
+    background-color: gold;
+    border-radius: 100%;
+    height: 48px;
+    width: 48px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 125ms all ease-in-out;
+}
+
+.setting-btns:hover {
+    transform: scale(1.1);
+}
+
+.sound-off {
+    right: 10px;
+    bottom: 10px;
+}
+
+.sound-off-img {
+    height: 32px;
+    width: 32px;
+}
+
+.sound-on {
+    right: 5px;
+}
+
+.full-screen {
+    right: 5px;
+}
+
+.end-screen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
 img {
     height: 480px;
     width: 720px;
@@ -35,11 +84,16 @@ h1 {
 
 .d-none {
     display: none !important;
-} 
+}
 
 @media (max-width: 720px) {
     canvas {
         width: 100%;
+    }
+
+    .start-screen {
+        width: 100%;
+        object-fit: contain;
     }
 }
 

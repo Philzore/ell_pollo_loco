@@ -64,7 +64,8 @@ class Character extends MoveableObject {
     ];
 
     world;
-    walking_sound = new Audio('../audio/walking.mp3')
+    walkingSound = new Audio('../audio/walking.mp3');
+    snoringSound = new Audio('../audio/snoring.mp3');
 
     constructor() {
         super().loadImage('../img/2_character_pepe/2_walk/W-21.png');
@@ -81,28 +82,32 @@ class Character extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            this.walking_sound.pause();
+            this.walkingSound.pause();
             if (this.world.keyboard.right && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.getTimeLastMove();
-                this.walking_sound.play();
+                if (!this.world.muted) {
+                    this.walkingSound.play();
+                }
             }
             if (this.world.keyboard.left && this.x > 0) {
                 this.reverse = true;
                 this.moveLeft();
                 this.getTimeLastMove();
-                this.walking_sound.play();
+                if (!this.world.muted) {
+                    this.walkingSound.play();
+                }
             }
 
             if ((this.world.keyboard.up || this.world.keyboard.space) && !this.isAboveGround()) {
-                this.jump();   
+                this.jump();
             }
-            
-            if(this.isAboveGround()){
-                this.onCollisionCourse = 'y' ;
+
+            if (this.isAboveGround()) {
+                this.onCollisionCourse = 'y';
             } else {
                 setTimeout(() => {
-                    this.onCollisionCourse = 'x' ;
+                    this.onCollisionCourse = 'x';
                 }, 100);
             }
 
@@ -110,6 +115,7 @@ class Character extends MoveableObject {
         }, 1000 / 60);
 
         setInterval(() => {
+            this.snoringSound.pause();
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             }
@@ -118,12 +124,16 @@ class Character extends MoveableObject {
             }
             else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.right || this.world.keyboard.left) {
-                    //walking
-                    this.playAnimation(this.IMAGES_WALKING);
-            } else if(this.checkSnooze()) {
+            }
+            else if (this.world.keyboard.right || this.world.keyboard.left) {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+            else if (this.checkSnooze()) {
                 this.playAnimation(this.IMAGES_LONG_IDLE);
-            } 
+                if (!this.world.muted) {
+                    this.snoringSound.play();
+                }
+            }
 
         }, 50);
 

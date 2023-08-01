@@ -1,11 +1,14 @@
 start screen --!--
-musik + sounds
+musik + sounds --!--
 coins einsammeln --!--
 flaschen einsammeln --!--
 flaschen nur werfen, wenn vorhanden --!--
-collision
-flaschen auch in andere Richtugn werfen
-endgegner besiegen
+collision --!--
+flaschen auch in andere Richtugn werfen --!--
+endgegner besiegen --!--
 game-over screen
 fullscreen
 Erklärung(welche tasten)
+intervall id & beenden
+sound muten
+aktionstasten
