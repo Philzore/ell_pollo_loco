@@ -1,8 +1,8 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let intervalIds = [] ;
-let muted = false ;
+let intervalIds = [];
+let muted = false;
 
 let backroundMusic = new Audio('../audio/backround.mp3');
 let looseSound = new Audio('../audio/loose.mp3');
@@ -82,7 +82,7 @@ function endGame() {
 }
 
 function setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time) ;
+    let id = setInterval(fn, time);
     intervalIds.push(id);
 }
 
@@ -90,15 +90,23 @@ function stopGame() {
     intervalIds.forEach(clearInterval);
 }
 
-function soundOff() {
-    //change picture
-    document.getElementById('sound-off').src = '../img/0_hud/volume.svg';
-    if (document.getElementById('start-screen').classList.contains('d-none')){
-        world.muted = true ;
+function soundOnOff() {
+    let soundImage = document.getElementById('sound-off');
+
+    if (muted) {
+        soundImage.src = '../img/0_hud/volume-off.svg';
+        muted = false;
+    } else {
+        soundImage.src = '../img/0_hud/volume.svg';
+        muted = true;
     }
-    if (muted){
-        document.getElementById('sound-off').src = '../img/0_hud/volume-off.svg';
+
+    if (document.getElementById('start-screen').classList.contains('d-none')) {
+        world.muted = true;
+    } else if (muted) {
+        world.muted = false;
     }
-    muted = true ;
+    console.log('world mute = ' + world.muted);
+    debugger;
     backroundMusic.pause();
 }

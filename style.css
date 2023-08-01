@@ -52,6 +52,7 @@ canvas {
 .sound-off-img {
     height: 32px;
     width: 32px;
+    object-fit: cover;
 }
 
 .sound-on {
