@@ -68,12 +68,12 @@ class Endboss extends MoveableObject {
 
     animate() {
         let i = 0;
-        let bossFirstContact = false ;
+        let bossFirstContact = false;
 
         setInterval(() => {
             if (i < 20) {
                 this.playAnimation(this.IMAGES_ALERT);
-            } 
+            }
             else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
@@ -81,12 +81,14 @@ class Endboss extends MoveableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
 
-            i++ ;
+            i++;
 
             if (world.character.x > 2000 && !bossFirstContact) {
-                i = 0 ;
-                bossFirstContact = true ;
-                this.firstContactSound.play();
+                i = 0;
+                bossFirstContact = true;
+                if (!this.world.muted) {
+                    this.firstContactSound.play();
+                }
             }
 
         }, 100);

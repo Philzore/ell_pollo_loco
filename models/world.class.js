@@ -18,14 +18,14 @@ class World {
     bottleSound = new Audio('../audio/bottle.mp3');
     chickenHitSound = new Audio('../audio/chicken.mp3');
 
-    muted ;
+    muted;
 
 
-    constructor(canvas, keyboard , muted) {
+    constructor(canvas, keyboard, muted) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.muted = muted ;
+        this.muted = muted;
         this.draw();
         this.setWorld();
         this.run();
@@ -65,7 +65,9 @@ class World {
             if (this.character.isCollidingTop(enemy)) {
                 this.level.enemies[i].img.src = '../img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
                 this.character.jump();
-                this.chickenHitSound.play();
+                if (!this.muted) {
+                    this.chickenHitSound.play();
+                }
                 this.level.enemies.splice(i, 1);
 
                 i = 0;

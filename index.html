@@ -12,17 +12,55 @@
 <body>
 
     <h1>El Pollo Locco</h1>
-    <div class="main-screen"> 
-        <img class="start-screen" id="start-screen" src="../img/9_intro_outro_screens/start/startscreen_1.png"
-            onclick="removeStartScreen()">
-        
-        <canvas class="d-none" id="canvas" width="720" height="480"></canvas>
-        <button class="setting-btns sound-off">
-            <img class="sound-off-img" id="sound-off" onclick="soundOnOff()" src="../img/0_hud/volume-off.svg" alt="">
-        </button>
+    <div class="main-screen">
+        <div class="game-screen shadow">
+            <div  id="start-screen"  class="intro-outro-screen">
+                <img class="start-screen"src="../img/9_intro_outro_screens/start/startscreen_1.png"
+                onclick="removeStartScreen()">
+            </div>
+            <div id="end-screen-win" class="intro-outro-screen d-none">
+                <span>!WIN</span>
+                <button>Next Round</button>
+            </div>
+            <div id="end-screen-loose" class="intro-outro-screen d-none">
+                <img class="end-screen" src="../img/9_intro_outro_screens/game_over/oh no you lost!.png">
+                <button>Restart</button>
+            </div>
+
+            <canvas class="d-none" id="canvas" width="720" height="480"></canvas>
+            <button class="setting-btns sound-off">
+                <img class="sound-off-img" id="sound-off" onclick="soundOnOff()" src="../img/0_hud/volume-off.svg"
+                    alt="">
+            </button>
+        </div>
+
+        <div class="introduction shadow">
+            <div class="key-explain">
+                <img class="shadow" src="../img/0_hud/arrow-left.svg">
+                <span>Move Left</span>
+            </div>
+            <div class="key-explain">
+                <img class="shadow" src="../img/0_hud/arrow-right.svg">
+                <span>Move Right</span>
+            </div>
+            <div class="key-explain">
+                <div class="jump-key ">
+                    <img class="shadow" src="../img/0_hud/arrow-up.svg">
+                    <span class="key shadow">Space</span>
+                </div>
+                <span>Jump</span>
+            </div>
+            <div class="key-explain">
+                <span class="key shadow">D</span>
+                <span>Throw Bottle</span>
+            </div>
+        </div>
+
         
 
-        <img id="end-screen" class="d-none end-screen" src="../img/9_intro_outro_screens/game_over/oh no you lost!.png">
+        <div class="turn-device d-none">
+
+        </div>
     </div>
 
     <script src="./models/drawable-objects.class.js"></script>

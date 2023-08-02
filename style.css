@@ -16,14 +16,22 @@ body {
     margin: 0;
 }
 
+.intro-outro-screen {
+
+}
+
 canvas {
     background-color: black;
     display: block;
 }
 
 .main-screen {
-    position: relative;
     display: block;
+}
+
+.game-screen {
+    position: relative;
+    margin-bottom: 20px;
 }
 
 .setting-btns {
@@ -77,6 +85,58 @@ img {
     cursor: pointer;
 }
 
+.introduction {
+    width: 720px;
+    border: 2px solid lightgray;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    box-sizing: border-box;
+}
+
+.introduction img{
+    height: 48px;
+    width: 48px;
+    background-color: gold;
+    border-radius: 4px;
+    cursor: default;
+}
+
+.shadow {
+    box-shadow: 0px 0px 6px 6px rgba(160, 34, 10, 0.7) ;
+}
+
+.introduction span{
+    font-size: 32px;
+}
+
+.key-explain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.jump-key {
+    display: flex;
+    gap: 10px;
+}
+
+.key {
+    background-color: gold;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 4px;
+    padding: 2px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 h1 {
     font-size: 64px;
     letter-spacing: 3px;
@@ -88,6 +148,10 @@ h1 {
 }
 
 @media (max-width: 720px) {
+    img {
+        height: auto;
+    }
+    
     canvas {
         width: 100%;
     }
@@ -95,6 +159,10 @@ h1 {
     .start-screen {
         width: 100%;
         object-fit: contain;
+    }
+
+    .introduction {
+        width: 100%;
     }
 }
 

@@ -75,7 +75,7 @@ function removeStartScreen() {
 
 function endGame() {
     //document.getElementById('canvas').classList.add('d-none');
-    document.getElementById('end-screen').classList.remove('d-none');
+    document.getElementById('end-screen-loose').classList.remove('d-none');
     backroundMusic.pause();
     looseSound.play();
     //clear intervals
@@ -107,6 +107,6 @@ function soundOnOff() {
         world.muted = false;
     }
     console.log('world mute = ' + world.muted);
-    debugger;
+    //debugger;
     backroundMusic.pause();
 }
