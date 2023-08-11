@@ -136,7 +136,7 @@ class World {
         if (this.keyboard.d) {
 
             if (this.character.bottleStatus > 0) {
-                //let bottle;
+                let bottle;
                 if (this.character.reverse == true) {
                     bottle = new ThrowableObject(this.character.x, this.character.y + 100, true);
                 } else if (this.character.reverse == false) {

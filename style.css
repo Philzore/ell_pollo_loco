@@ -16,8 +16,23 @@ body {
     margin: 0;
 }
 
-.intro-outro-screen {
+/* .intro-outro-screen {
+    height: 480px;
+    width: 720px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+} */
 
+.restart-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 canvas {
@@ -27,6 +42,7 @@ canvas {
 
 .main-screen {
     display: block;
+    max-width: 720px;
 }
 
 .game-screen {
@@ -50,6 +66,31 @@ canvas {
 
 .setting-btns:hover {
     transform: scale(1.1);
+}
+
+.left-btn {
+    left: 10px;
+    bottom: 10px;
+}
+
+.right-btn {
+    left: 70px;
+    bottom: 10px;
+}
+
+.up-btn {
+    right: 70px;
+    bottom: 10px;
+}
+
+.throw-btn {
+    right: 10px;
+    bottom: 70px;
+}
+
+.fullscreen-btn {
+    right: 10px;
+    top: 10px;
 }
 
 .sound-off {
@@ -95,7 +136,7 @@ img {
     box-sizing: border-box;
 }
 
-.introduction img{
+.introduction img {
     height: 48px;
     width: 48px;
     background-color: gold;
@@ -104,10 +145,10 @@ img {
 }
 
 .shadow {
-    box-shadow: 0px 0px 6px 6px rgba(160, 34, 10, 0.7) ;
+    box-shadow: 0px 0px 6px 6px rgba(160, 34, 10, 0.7);
 }
 
-.introduction span{
+.introduction span {
     font-size: 32px;
 }
 
@@ -151,7 +192,7 @@ h1 {
     img {
         height: auto;
     }
-    
+
     canvas {
         width: 100%;
     }

@@ -110,3 +110,38 @@ function soundOnOff() {
     //debugger;
     backroundMusic.pause();
 }
+
+function goLeft() {
+    keyboard.left = true;
+
+    console.log(keyboard.left);
+
+}
+
+function setFullScreen() {
+    let fullScreen = document.getElementById('main-screen');
+    enterFullscreen(fullScreen);
+}
+
+function enterFullscreen(element) {
+    if(element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if(element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+        element.msRequestFullscreen();
+      } else if(element.webkitRequestFullscreen) {  // iOS Safari
+        element.webkitRequestFullscreen();
+      }
+    //   document.getElementById('canvas').style.width = '80%';
+    //   document.getElementById('canvas').style.height = '80%';
+}
+
+function exitFullscreen() {
+    if(document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if(document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+
+let btnLeft = document.getElementById('btn-left');
+btnLeft.addEventListener('touchstart', goLeft);
