@@ -188,6 +188,11 @@ h1 {
     display: none !important;
 }
 
+.full-view {
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
 @media (max-width: 720px) {
     img {
         height: auto;

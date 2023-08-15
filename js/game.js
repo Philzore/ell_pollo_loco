@@ -88,6 +88,7 @@ function setStoppableInterval(fn, time) {
 
 function stopGame() {
     intervalIds.forEach(clearInterval);
+    // for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
 function soundOnOff() {
@@ -124,24 +125,47 @@ function setFullScreen() {
 }
 
 function enterFullscreen(element) {
-    if(element.requestFullscreen) {
-        element.requestFullscreen();
-      } else if(element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
-        element.msRequestFullscreen();
-      } else if(element.webkitRequestFullscreen) {  // iOS Safari
-        element.webkitRequestFullscreen();
-      }
-    //   document.getElementById('canvas').style.width = '80%';
-    //   document.getElementById('canvas').style.height = '80%';
+    
+    if (document.getElementById('fullscreen-btn-img').src == 'http://127.0.0.1:5500/img/0_hud/fullscreen.svg') {
+
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+            document.getElementById('introduction').classList.add('d-none');
+        } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+            element.msRequestFullscreen();
+        } else if (element.webkitRequestFullscreen) {  // iOS Safari
+            element.webkitRequestFullscreen();
+        }
+        addFullViewClass();
+    } else {
+        exitFullscreen();
+        removeFullViewClass();
+    }
+
+}
+
+function addFullViewClass() {
+    document.getElementById('start-screen').classList.add('full-view');
+    document.getElementById('img-start-screen').classList.add('full-view');
+    document.getElementById('canvas').classList.add('full-view');
+    document.getElementById('fullscreen-btn-img').src = '../img/0_hud/close.svg';
+}
+
+function removeFullViewClass() {
+    document.getElementById('start-screen').classList.remove('full-view');
+    document.getElementById('img-start-screen').classList.remove('full-view');
+    document.getElementById('canvas').classList.remove('full-view');
+    document.getElementById('fullscreen-btn-img').src = '../img/0_hud/fullscreen.svg';
+    document.getElementById('introduction').classList.remove('d-none');
 }
 
 function exitFullscreen() {
-    if(document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if(document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
     }
-  }
+}
 
 let btnLeft = document.getElementById('btn-left');
 btnLeft.addEventListener('touchstart', goLeft);

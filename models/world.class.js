@@ -55,36 +55,43 @@ class World {
         this.checkCollisionBottle();
     }
 
+    deleteAfterCollision(obj, item) {
+        obj.splice(obj.indexOf(item), 1)
+    }
+
     checkCollisionEnemy() {
-        let i = 0;
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.onCollisionCourse == 'x') {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
             if (this.character.isCollidingTop(enemy)) {
-                this.level.enemies[i].img.src = '../img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
                 this.character.jump();
+                enemy.hit();
+
                 if (!this.muted) {
                     this.chickenHitSound.play();
                 }
-                this.level.enemies.splice(i, 1);
-
-                i = 0;
+                setTimeout(() => {
+                    this.deleteAfterCollision(this.level.enemies, enemy);
+                }, 500);
             }
             this.throwableObject.forEach((bottle) => {
                 if (bottle.isColliding(enemy)) {
-                    console.log('Flaschen treffer');
-                    this.throwableObject.splice(bottle, 1);
-
                     enemy.hit();
+                    bottle.splash();
+                    console.log('Flaschen treffer');
+                    setTimeout(() => {
+                        this.deleteAfterCollision(this.throwableObject, bottle);
+                    }, 500);
+                    
 
                     if (enemy.isDead()) {
-                        this.level.enemies.splice(i, 1);
+                        this.deleteAfterCollision(this.level.enemies, enemy);
                     }
                 }
             });
-            i++;
+   
         });
     }
 
@@ -98,7 +105,7 @@ class World {
 
                 this.character.coinStatus += 20;
 
-                this.level.coins.splice(i, 1);
+                this.deleteAfterCollision(this.level.coins, coin);
 
                 this.statusBarCoins.setPercentage(this.character.coinStatus);
 

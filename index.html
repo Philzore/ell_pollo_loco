@@ -16,7 +16,7 @@
         <!-- overlays -->
         <div class="game-screen shadow">
             <div id="start-screen" class="intro-outro-screen">
-                <img class="start-screen" src="../img/9_intro_outro_screens/start/startscreen_1.png"
+                <img id="img-start-screen" class="start-screen" src="../img/9_intro_outro_screens/start/startscreen_1.png"
                     onclick="removeStartScreen()">
             </div>
             <div id="end-screen-win" class="intro-outro-screen d-none">
@@ -48,12 +48,12 @@
                 <img class="sound-off-img" src="../img/0_hud/bottle.ico">
             </button>
             <button class="setting-btns fullscreen-btn" onclick="setFullScreen()">
-                <img class="sound-off-img" src="../img/0_hud/fullscreen.svg">
+                <img id="fullscreen-btn-img" class="sound-off-img" src="../img/0_hud/fullscreen.svg">
             </button>
             <!-- end action buttons -->
         </div>
         <!-- introductions -->
-        <div class="introduction shadow">
+        <div id="introduction" class="introduction shadow">
             <div class="key-explain">
                 <img class="shadow" src="../img/0_hud/arrow-left.svg">
                 <span>Move Left</span>

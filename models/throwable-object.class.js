@@ -41,4 +41,8 @@ class ThrowableObject extends MoveableObject {
         }, 25);
     }
 
+    splash() {
+        this.playAnimation(this.IMAGES_SPLASH);
+    }
+
 }
