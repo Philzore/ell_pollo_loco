@@ -2,6 +2,7 @@ class Endboss extends MoveableObject {
 
     height = 400;
     width = 250;
+    speed = 5;
     y = 50;
     x = 2500;
 
@@ -76,6 +77,9 @@ class Endboss extends MoveableObject {
             }
             else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                console.log('dead');
             }
             else {
                 this.playAnimation(this.IMAGES_WALKING);
@@ -86,11 +90,15 @@ class Endboss extends MoveableObject {
             if (world.character.x > 2000 && !bossFirstContact) {
                 i = 0;
                 bossFirstContact = true;
-                if (!this.world.muted) {
+                if (!world.muted) {
                     this.firstContactSound.play();
                 }
             }
 
-        }, 100);
+            if (bossFirstContact) {
+                this.moveLeft();
+            }
+
+        }, 50);
     }
 }

@@ -1,4 +1,5 @@
 class ThrowableObject extends MoveableObject {
+    splash = false ;
 
     IMAGES_ROTATION = [
         '../img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -31,18 +32,21 @@ class ThrowableObject extends MoveableObject {
         this.speedY = 30;
         this.applyGravity();
         setInterval(() => {
-            if (reverse == false) {
+            if (reverse == false && !this.splash) {
                 this.playAnimation(this.IMAGES_ROTATION);
                 this.x += 10;
-            } else if (reverse == true) {
+            } else if (reverse == true && !splash) {
                 this.playAnimation(this.IMAGES_ROTATION);
                 this.x -= 10;
+            } else if (this.splash) {
+                this.speedY = 0 ;
+                this.playAnimation(this.IMAGES_SPLASH);
             }
         }, 25);
     }
 
     splash() {
-        this.playAnimation(this.IMAGES_SPLASH);
+        this.splash = true ;
     }
 
 }

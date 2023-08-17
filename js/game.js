@@ -76,19 +76,21 @@ function removeStartScreen() {
 function endGame() {
     //document.getElementById('canvas').classList.add('d-none');
     document.getElementById('end-screen-loose').classList.remove('d-none');
+    
     backroundMusic.pause();
-    looseSound.play();
-    //clear intervals
+    if (!muted) {
+        looseSound.play();
+    } else {
+        looseSound.pause();
+    }
+    
+    clearIntervals();
 }
 
-function setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    intervalIds.push(id);
-}
-
-function stopGame() {
-    intervalIds.forEach(clearInterval);
-    // for (let i = 1; i < 9999; i++) window.clearInterval(i);
+function clearIntervals() {
+     for (let i = 0; i < 9999; i++) {
+        window.clearInterval(i);
+     }
 }
 
 function soundOnOff() {
@@ -108,7 +110,7 @@ function soundOnOff() {
         world.muted = false;
     }
     console.log('world mute = ' + world.muted);
-    //debugger;
+    
     backroundMusic.pause();
 }
 

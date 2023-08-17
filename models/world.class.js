@@ -20,6 +20,7 @@ class World {
 
     muted;
 
+    enemyIsHit = false;
 
     constructor(canvas, keyboard, muted) {
         this.ctx = canvas.getContext('2d');
@@ -77,21 +78,26 @@ class World {
                 }, 500);
             }
             this.throwableObject.forEach((bottle) => {
-                if (bottle.isColliding(enemy)) {
+
+                if (bottle.isColliding(enemy) && !this.enemyIsHit) {
                     enemy.hit();
-                    bottle.splash();
+                    this.enemyIsHit = true;
+                    bottle.splash = true;
                     console.log('Flaschen treffer');
                     setTimeout(() => {
                         this.deleteAfterCollision(this.throwableObject, bottle);
+                        this.enemyIsHit = false;
                     }, 500);
-                    
 
                     if (enemy.isDead()) {
-                        this.deleteAfterCollision(this.level.enemies, enemy);
+                        setTimeout(() => {
+                            this.deleteAfterCollision(this.level.enemies, enemy);
+                        }, 500);
+
                     }
                 }
             });
-   
+
         });
     }
 
@@ -143,13 +149,13 @@ class World {
         if (this.keyboard.d) {
 
             if (this.character.bottleStatus > 0) {
-                let bottle;
+                // let bottle;
                 if (this.character.reverse == true) {
-                    bottle = new ThrowableObject(this.character.x, this.character.y + 100, true);
+                    this.bottle = new ThrowableObject(this.character.x, this.character.y + 100, true);
                 } else if (this.character.reverse == false) {
-                    bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, false);
+                    this.bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, false);
                 }
-                this.throwableObject.push(bottle);
+                this.throwableObject.push(this.bottle);
                 this.character.bottleStatus -= 20;
                 this.statusBarBottle.setPercentage(this.character.bottleStatus);
             }
