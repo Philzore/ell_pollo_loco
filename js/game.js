@@ -7,9 +7,23 @@ let muted = false;
 let backroundMusic = new Audio('../audio/backround.mp3');
 let looseSound = new Audio('../audio/loose.mp3');
 
+addEventListener('resize' , checkDeviceWidth) ;
+
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, muted);
+}
+
+function reloadPage() {
+    location.reload();
+}
+
+function checkDeviceWidth() {
+    if (window.innerWidth <= 800) {
+        document.getElementById('turn-device-screen').classList.remove('d-none');
+    } else {
+        document.getElementById('turn-device-screen').classList.add('d-none');
+    }
 }
 
 window.addEventListener('keydown', (event) => {
@@ -73,8 +87,12 @@ function removeStartScreen() {
     backroundMusic.play();
 }
 
+function endGameWin () {
+    document.getElementById('end-screen-win').classList.remove('d-none');
+    clearIntervals();
+}
+
 function endGame() {
-    //document.getElementById('canvas').classList.add('d-none');
     document.getElementById('end-screen-loose').classList.remove('d-none');
     
     backroundMusic.pause();

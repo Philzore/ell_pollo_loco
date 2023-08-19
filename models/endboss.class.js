@@ -75,11 +75,10 @@ class Endboss extends MoveableObject {
             if (i < 20) {
                 this.playAnimation(this.IMAGES_ALERT);
             }
-            else if (this.isHurt()) {
+            else if (this.isHurt() && this.energy >= 20) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-                console.log('dead');
             }
             else {
                 this.playAnimation(this.IMAGES_WALKING);

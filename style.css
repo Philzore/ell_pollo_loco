@@ -16,14 +16,6 @@ body {
     margin: 0;
 }
 
- /* .intro-outro-screen {
-    position: relative;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}  */
-
 .intro-outro-screen {
     position: absolute;
     height: 100%;
@@ -34,13 +26,13 @@ body {
     align-items: center;
 }
 
+.intro-outro-screen img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
 .restart-btn {
-    /* position: absolute;
-    top: 400px;
-    right: 0;
-    bottom: 0;
-    left: calc(50% - 50px); */
-    
     border-radius: 10px;
     width: 100px;
     height: 50px;
@@ -49,22 +41,33 @@ body {
     border: 2px #a75f39 solid;
     font-size: 28px;
     padding: 5px;
-    font-family: zabars;
-    cursor: pointer;
+    font-family: 'zabra'; 
     background-image: linear-gradient(to bottom, #ffa602, #ffdf00);
     color: #9b401d;
-    transition: 100ms ease-in-out;
-    letter-spacing: 2px;
+    transition: all 125ms ease-in-out;
+}
+
+.restart-btn:hover {
+    cursor: pointer;
+    scale: 1.2;
+    background-image: linear-gradient(to top, #ffa602, #ffdf00);
+    transition: all 125ms ease-in-out;
 }
 
 canvas {
     background-color: black;
     display: block;
+    border-radius: 10px;
 }
 
 .main-screen {
-    display: block;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
     max-width: 720px;
+    margin-bottom: 20px;
 }
 
 .game-screen {
@@ -72,7 +75,9 @@ canvas {
     margin-bottom: 20px;
 }
 
-
+.start-screen{
+    cursor: pointer;
+}
 
 .setting-btns {
     position: absolute;
@@ -115,6 +120,8 @@ canvas {
 .fullscreen-btn {
     right: 10px;
     top: 10px;
+    z-index: 10;
+    cursor: pointer;
 }
 
 .sound-off {
@@ -139,12 +146,6 @@ canvas {
 .end-screen {
     height: 100%;
     width: 100%;
-}
-
-img {
-    height: 480px;
-    width: 720px;
-    cursor: pointer;
 }
 
 .introduction {
@@ -214,18 +215,35 @@ h1 {
     height: 100vh !important;
 }
 
-@media (max-width: 720px) {
-    img {
-        height: auto;
-    }
+.turn-device {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;z-index: 20;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: black;
+    text-align: center;
+    font-size: 32px;
+}
 
+.turn-device img {
+    height: 128px;
+    width: 128px;
+}
+
+.win-text {
+    font-size: 64px;
+    fill-opacity: 0.5;
+}
+
+@media (max-width: 720px) {
     canvas {
         width: 100%;
-    }
-
-    .start-screen {
-        width: 100%;
-        object-fit: contain;
     }
 
     .introduction {

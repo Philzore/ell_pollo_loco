@@ -46,6 +46,8 @@ class World {
             //check dead
             if (this.character.isDead()) {
                 endGame();
+            } else if (this.level.enemies.length == 0) {
+                endGameWin();
             }
         }, 150);
     }
@@ -83,7 +85,7 @@ class World {
                     enemy.hit();
                     this.enemyIsHit = true;
                     bottle.splash = true;
-                    console.log('Flaschen treffer');
+                    
                     setTimeout(() => {
                         this.deleteAfterCollision(this.throwableObject, bottle);
                         this.enemyIsHit = false;
@@ -94,6 +96,12 @@ class World {
                             this.deleteAfterCollision(this.level.enemies, enemy);
                         }, 500);
 
+                    }
+                    if (enemy instanceof Endboss) {
+                        this.statusBarEndboss.setPercentage(enemy.energy);
+                        if (enemy.energy == 0) {
+                            this.statusBarEndboss.stopMoving = true ;
+                        }
                     }
                 }
             });
@@ -149,7 +157,6 @@ class World {
         if (this.keyboard.d) {
 
             if (this.character.bottleStatus > 0) {
-                // let bottle;
                 if (this.character.reverse == true) {
                     this.bottle = new ThrowableObject(this.character.x, this.character.y + 100, true);
                 } else if (this.character.reverse == false) {
@@ -176,9 +183,9 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottle);
-        this.addToMap(this.statusBarEndboss);
+        
         this.ctx.translate(this.camera_x, 0); // forward
-
+        this.addToMap(this.statusBarEndboss);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);

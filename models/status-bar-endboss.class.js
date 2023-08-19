@@ -1,9 +1,11 @@
 class StatusBarEndboss extends DrawableObject {
 
-    x = 2000;
-    y = 500 ;
+    x = 2500;
+    y = 50 ;
     width = 200;
     height = 60;
+    speed = 5;
+    stopMoving = false ;
 
     IMAGES = [
         '../img/7_statusbars/2_statusbar_endboss/0.png',
@@ -20,6 +22,7 @@ class StatusBarEndboss extends DrawableObject {
         super();
         this.loadImages(this.IMAGES);
         this.setPercentage(100);
+        this.animate();
     }
 
     /**
@@ -48,6 +51,24 @@ class StatusBarEndboss extends DrawableObject {
         } else {
             return 0;
         }
+    }
+
+    animate() {
+        let bossFirstContact = false;
+        setInterval(() => {
+            if (world.character.x > 2000 && !bossFirstContact) {
+                bossFirstContact = true;
+            }
+            if (bossFirstContact && !this.stopMoving) {
+                this.moveWithBoss();
+            }
+            
+        }, 50);
+
+    }
+
+    moveWithBoss() {
+        this.x -= this.speed;
     }
 
 }

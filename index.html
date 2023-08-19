@@ -12,75 +12,78 @@
 <body>
 
     <h1>El Pollo Locco</h1>
-    <div id="main-screen" class="main-screen">
+    <div id="main-screen" class="main-screen shadow">
         <!-- overlays -->
-        <div class="game-screen shadow">
-            <div id="start-screen" class="intro-outro-screen">
-                <img id="img-start-screen" class="start-screen" src="../img/9_intro_outro_screens/start/startscreen_1.png"
-                    onclick="removeStartScreen()">
-            </div>
-            <div id="end-screen-win" class="intro-outro-screen d-none">
-                <span>!WIN</span>
-                <button>Next Round</button>
-            </div>
-            <div id="end-screen-loose" class="intro-outro-screen d-none">
-                <img class="end-screen" src="../img/9_intro_outro_screens/game_over/oh no you lost!.png">
-                <button class="restart-btn" id="restart-btn">Restart</button>
-            </div>
-            <!-- end overlays -->
-            
-            <canvas class="d-none" id="canvas" width="720" height="480"></canvas>
-            
-            <!-- action buttons -->
-            <button class="setting-btns sound-off" onclick="soundOnOff()">
-                <img class="sound-off-img" id="sound-off" src="../img/0_hud/volume-off.svg" alt="">
-            </button>
-            <button id="btn-left" class="setting-btns left-btn">
-                <img class="sound-off-img" src="../img/0_hud/arrow-left.svg">
-            </button>
-            <button class="setting-btns right-btn">
-                <img class="sound-off-img" src="../img/0_hud/arrow-right.svg">
-            </button>
-            <button class="setting-btns up-btn">
-                <img class="sound-off-img" src="../img/0_hud/arrow-up.svg">
-            </button>
-            <button class="setting-btns throw-btn">
-                <img class="sound-off-img" src="../img/0_hud/bottle.ico">
-            </button>
-            <button class="setting-btns fullscreen-btn" onclick="setFullScreen()">
-                <img id="fullscreen-btn-img" class="sound-off-img" src="../img/0_hud/fullscreen.svg">
-            </button>
-            <!-- end action buttons -->
+        <!-- <div class="game-screen shadow"> -->
+        <div id="start-screen" class="intro-outro-screen">
+            <img id="img-start-screen" class="start-screen" src="../img/9_intro_outro_screens/start/startscreen_1.png"
+                onclick="removeStartScreen()">
         </div>
-        <!-- introductions -->
-        <div id="introduction" class="introduction shadow">
-            <div class="key-explain">
-                <img class="shadow" src="../img/0_hud/arrow-left.svg">
-                <span>Move Left</span>
-            </div>
-            <div class="key-explain">
-                <img class="shadow" src="../img/0_hud/arrow-right.svg">
-                <span>Move Right</span>
-            </div>
-            <div class="key-explain">
-                <div class="jump-key ">
-                    <img class="shadow" src="../img/0_hud/arrow-up.svg">
-                    <span class="key shadow">Space</span>
-                </div>
-                <span>Jump</span>
-            </div>
-            <div class="key-explain">
-                <span class="key shadow">D</span>
-                <span>Throw Bottle</span>
-            </div>
+        <div id="end-screen-win" class="intro-outro-screen d-none">
+            <span class="win-text">YOU WON!</span>
+            <button class="restart-btn" id="restart-btn" onclick="reloadPage()">Restart</button>
         </div>
-        <!-- end introduction -->
+        <div id="end-screen-loose" class="intro-outro-screen d-none">
+            <img class="end-screen" src="../img/9_intro_outro_screens/game_over/oh no you lost!.png">
+            <button class="restart-btn" id="restart-btn" onclick="reloadPage()">Restart</button>
+        </div>
+        <!-- end overlays -->
+
+        <canvas class="" id="canvas" width="720" height="480"></canvas>
+
+        <!-- action buttons -->
+        <button class="setting-btns sound-off" onclick="soundOnOff()">
+            <img class="sound-off-img" id="sound-off" src="../img/0_hud/volume-off.svg" alt="">
+        </button>
+        <button id="btn-left" class="setting-btns left-btn">
+            <img class="sound-off-img" src="../img/0_hud/arrow-left.svg">
+        </button>
+        <button class="setting-btns right-btn">
+            <img class="sound-off-img" src="../img/0_hud/arrow-right.svg">
+        </button>
+        <button class="setting-btns up-btn">
+            <img class="sound-off-img" src="../img/0_hud/arrow-up.svg">
+        </button>
+        <button class="setting-btns throw-btn">
+            <img class="sound-off-img" src="../img/0_hud/bottle.ico">
+        </button>
+        <button class="setting-btns fullscreen-btn" onclick="setFullScreen()">
+            <img id="fullscreen-btn-img" class="sound-off-img" src="../img/0_hud/fullscreen.svg">
+        </button>
+        <!-- end action buttons -->
+        <!-- </div> -->
 
 
-        <div class="turn-device d-none">
 
+        <div id="turn-device-screen" class="turn-device d-none">
+            <img src="./img/0_hud/rotate.png">
+            <span>Please rotate your device to get full experience</span>
         </div>
     </div>
+
+    <!-- introductions -->
+    <div id="introduction" class="introduction shadow">
+        <div class="key-explain">
+            <img class="shadow" src="../img/0_hud/arrow-left.svg">
+            <span>Move Left</span>
+        </div>
+        <div class="key-explain">
+            <img class="shadow" src="../img/0_hud/arrow-right.svg">
+            <span>Move Right</span>
+        </div>
+        <div class="key-explain">
+            <div class="jump-key ">
+                <img class="shadow" src="../img/0_hud/arrow-up.svg">
+                <span class="key shadow">Space</span>
+            </div>
+            <span>Jump</span>
+        </div>
+        <div class="key-explain">
+            <span class="key shadow">D</span>
+            <span>Throw Bottle</span>
+        </div>
+    </div>
+    <!-- end introduction -->
 
     <script src="./models/drawable-objects.class.js"></script>
     <script src="./models/moveable-object.class.js"></script>
