@@ -14,22 +14,26 @@ class World {
     throwableObject = [];
     bottle;
 
-    coinSound = new Audio('../audio/coin.mp3');
-    bottleSound = new Audio('../audio/bottle.mp3');
-    chickenHitSound = new Audio('../audio/chicken.mp3');
-
-    muted;
+    coinSound = new Audio('./audio/coin.mp3');
+    bottleSound = new Audio('./audio/bottle.mp3');
+    chickenHitSound = new Audio('./audio/chicken.mp3');
 
     enemyIsHit = false;
 
-    constructor(canvas, keyboard, muted) {
+    /**
+     * constructor always run one time when class be created
+     * 
+     * @param {element} canvas to set images on the canvas
+     * @param {object} keyboard instance of class keyboard 
+     */
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.muted = muted;
         this.draw();
         this.setWorld();
         this.run();
+        
     }
 
     setWorld() {
@@ -72,7 +76,7 @@ class World {
                 this.character.jump();
                 enemy.hit();
 
-                if (!this.muted) {
+                if (!muted) {
                     this.chickenHitSound.play();
                 }
                 setTimeout(() => {
@@ -113,7 +117,7 @@ class World {
         let i = 0;
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
-                if (!this.muted) {
+                if (!muted) {
                     this.coinSound.play();
                 }
 
@@ -137,7 +141,7 @@ class World {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.bottleStatus += 20;
-                if (!this.muted) {
+                if (!muted) {
                     this.bottleSound.play();
                 }
                 this.level.bottles.splice(i, 1);

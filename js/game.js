@@ -4,28 +4,50 @@ let keyboard = new Keyboard();
 let intervalIds = [];
 let muted = false;
 
-let backroundMusic = new Audio('../audio/backround.mp3');
-let looseSound = new Audio('../audio/loose.mp3');
+let backroundMusic = new Audio('./audio/backround.mp3');
+let looseSound = new Audio('./audio/loose.mp3');
+let winSound = new Audio('./audio/win.mp3');
 
+/**
+ * Eventlistener when screen size changed
+ * 
+ */
 addEventListener('resize' , checkDeviceWidth) ;
 
+/**
+ * initialize the game
+ * 
+ */
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, muted);
 }
 
+/**
+ * reload current page
+ * 
+ */
 function reloadPage() {
     location.reload();
 }
 
+/**
+ * check current width of the screen and show overlay if smaller then 800px
+ * 
+ */
 function checkDeviceWidth() {
     if (window.innerWidth <= 800) {
         document.getElementById('turn-device-screen').classList.remove('d-none');
     } else {
         document.getElementById('turn-device-screen').classList.add('d-none');
     }
+    
 }
 
+/**
+ * Eventlistener if a key is down
+ * 
+ */
 window.addEventListener('keydown', (event) => {
     let pressedKey = event;
     switch (pressedKey['code']) {
@@ -52,6 +74,10 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
+/**
+ * Eventlistener if a key is up
+ * 
+ */
 window.addEventListener('keyup', (event) => {
     let pressedKey = event;
 
@@ -79,6 +105,10 @@ window.addEventListener('keyup', (event) => {
     }
 });
 
+/**
+ * remove start screen
+ * 
+ */
 function removeStartScreen() {
     initLevel();
     document.getElementById('start-screen').classList.add('d-none');
@@ -87,11 +117,25 @@ function removeStartScreen() {
     backroundMusic.play();
 }
 
+/**
+ * show win screen and clear intervals
+ * 
+ */
 function endGameWin () {
     document.getElementById('end-screen-win').classList.remove('d-none');
+    if (!muted) {
+        backroundMusic.pause();
+        winSound.play();
+    } else {
+        winSound.pause();
+    }
     clearIntervals();
 }
 
+/**
+ * show end screen when loose and clear intervals
+ * 
+ */
 function endGame() {
     document.getElementById('end-screen-loose').classList.remove('d-none');
     
@@ -105,45 +149,51 @@ function endGame() {
     clearIntervals();
 }
 
+/**
+ * clear all intervals
+ * 
+ */
 function clearIntervals() {
      for (let i = 0; i < 9999; i++) {
         window.clearInterval(i);
      }
 }
 
+/**
+ * turn sound off and change sound img when toggle
+ * 
+ */
 function soundOnOff() {
     let soundImage = document.getElementById('sound-off');
 
     if (muted) {
-        soundImage.src = '../img/0_hud/volume-off.svg';
+        soundImage.src = './img/0_hud/volume-off.svg';
         muted = false;
+        console.log('false');
     } else {
-        soundImage.src = '../img/0_hud/volume.svg';
+        soundImage.src = './img/0_hud/volume.svg';
         muted = true;
+        console.log('true');
+        backroundMusic.pause();
     }
 
-    if (document.getElementById('start-screen').classList.contains('d-none')) {
-        world.muted = true;
-    } else if (muted) {
-        world.muted = false;
-    }
-    console.log('world mute = ' + world.muted);
-    
-    backroundMusic.pause();
+    console.log('world mute = ' + muted); 
 }
 
-function goLeft() {
-    keyboard.left = true;
-
-    console.log(keyboard.left);
-
-}
-
+/**
+ * set full screen
+ * 
+ */
 function setFullScreen() {
     let fullScreen = document.getElementById('main-screen');
     enterFullscreen(fullScreen);
 }
 
+/**
+ * open full screen
+ * 
+ * @param {element} element which should enter full screen 
+ */
 function enterFullscreen(element) {
     
     if (document.getElementById('fullscreen-btn-img').src == 'http://127.0.0.1:5500/img/0_hud/fullscreen.svg') {
@@ -164,21 +214,33 @@ function enterFullscreen(element) {
 
 }
 
+/**
+ * give the elements the correct class for the full screen
+ * 
+ */
 function addFullViewClass() {
     document.getElementById('start-screen').classList.add('full-view');
     document.getElementById('img-start-screen').classList.add('full-view');
     document.getElementById('canvas').classList.add('full-view');
-    document.getElementById('fullscreen-btn-img').src = '../img/0_hud/close.svg';
+    document.getElementById('fullscreen-btn-img').src = './img/0_hud/close.svg';
 }
 
+/**
+ * remove the elements the correct class for the full screen
+ * 
+ */
 function removeFullViewClass() {
     document.getElementById('start-screen').classList.remove('full-view');
     document.getElementById('img-start-screen').classList.remove('full-view');
     document.getElementById('canvas').classList.remove('full-view');
-    document.getElementById('fullscreen-btn-img').src = '../img/0_hud/fullscreen.svg';
+    document.getElementById('fullscreen-btn-img').src = './img/0_hud/fullscreen.svg';
     document.getElementById('introduction').classList.remove('d-none');
 }
 
+/**
+ * exit from full screen
+ * 
+ */
 function exitFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -186,6 +248,3 @@ function exitFullscreen() {
         document.webkitExitFullscreen();
     }
 }
-
-let btnLeft = document.getElementById('btn-left');
-btnLeft.addEventListener('touchstart', goLeft);

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="image/x-icon" href="../img/10_fav_icon/sombrero.ico">
+    <link rel="icon" type="image/x-icon" href="./img/10_fav_icon/sombrero.ico">
     <title>El Pollo Locco</title>
 </head>
 
@@ -16,7 +16,7 @@
         <!-- overlays -->
         <!-- <div class="game-screen shadow"> -->
         <div id="start-screen" class="intro-outro-screen">
-            <img id="img-start-screen" class="start-screen" src="../img/9_intro_outro_screens/start/startscreen_1.png"
+            <img id="img-start-screen" class="start-screen" src="./img/9_intro_outro_screens/start/startscreen_1.png"
                 onclick="removeStartScreen()">
         </div>
         <div id="end-screen-win" class="intro-outro-screen d-none">
@@ -24,7 +24,7 @@
             <button class="restart-btn" id="restart-btn" onclick="reloadPage()">Restart</button>
         </div>
         <div id="end-screen-loose" class="intro-outro-screen d-none">
-            <img class="end-screen" src="../img/9_intro_outro_screens/game_over/oh no you lost!.png">
+            <img class="end-screen" src="./img/9_intro_outro_screens/game_over/oh no you lost!.png">
             <button class="restart-btn" id="restart-btn" onclick="reloadPage()">Restart</button>
         </div>
         <!-- end overlays -->
@@ -33,22 +33,22 @@
 
         <!-- action buttons -->
         <button class="setting-btns sound-off" onclick="soundOnOff()">
-            <img class="sound-off-img" id="sound-off" src="../img/0_hud/volume-off.svg" alt="">
+            <img class="sound-off-img" id="sound-off" src="./img/0_hud/volume-off.svg" alt="">
         </button>
         <button id="btn-left" class="setting-btns left-btn">
-            <img class="sound-off-img" src="../img/0_hud/arrow-left.svg">
+            <img class="sound-off-img" src="./img/0_hud/arrow-left.svg">
         </button>
-        <button class="setting-btns right-btn">
-            <img class="sound-off-img" src="../img/0_hud/arrow-right.svg">
+        <button id="btn-right" class="setting-btns right-btn">
+            <img class="sound-off-img" src="./img/0_hud/arrow-right.svg">
         </button>
-        <button class="setting-btns up-btn">
-            <img class="sound-off-img" src="../img/0_hud/arrow-up.svg">
+        <button id="btn-up" class="setting-btns up-btn">
+            <img class="sound-off-img" src="./img/0_hud/arrow-up.svg">
         </button>
-        <button class="setting-btns throw-btn">
-            <img class="sound-off-img" src="../img/0_hud/bottle.ico">
+        <button id="btn-throw" class="setting-btns throw-btn">
+            <img class="sound-off-img" src="./img/0_hud/bottle.ico">
         </button>
         <button class="setting-btns fullscreen-btn" onclick="setFullScreen()">
-            <img id="fullscreen-btn-img" class="sound-off-img" src="../img/0_hud/fullscreen.svg">
+            <img id="fullscreen-btn-img" class="sound-off-img" src="./img/0_hud/fullscreen.svg">
         </button>
         <!-- end action buttons -->
         <!-- </div> -->
@@ -64,16 +64,16 @@
     <!-- introductions -->
     <div id="introduction" class="introduction shadow">
         <div class="key-explain">
-            <img class="shadow" src="../img/0_hud/arrow-left.svg">
+            <img class="shadow" src="./img/0_hud/arrow-left.svg">
             <span>Move Left</span>
         </div>
         <div class="key-explain">
-            <img class="shadow" src="../img/0_hud/arrow-right.svg">
+            <img class="shadow" src="./img/0_hud/arrow-right.svg">
             <span>Move Right</span>
         </div>
         <div class="key-explain">
             <div class="jump-key ">
-                <img class="shadow" src="../img/0_hud/arrow-up.svg">
+                <img class="shadow" src="./img/0_hud/arrow-up.svg">
                 <span class="key shadow">Space</span>
             </div>
             <span>Jump</span>

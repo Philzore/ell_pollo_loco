@@ -7,11 +7,15 @@ class Coins extends MoveableObject {
         left: 25
     }
 
+    /**
+     * constructor always run one time when class be created
+     * 
+     */
     constructor() {
-        super().loadImage('../img/8_coin/coin_1.png');
+        super().loadImage('./img/8_coin/coin_1.png');
 
         this.x = 500 + Math.random() * 1500;
-        this.y = 0 + Math.random() * 300 ;
+        this.y = 0 + Math.random() * 300;
 
     }
 }
