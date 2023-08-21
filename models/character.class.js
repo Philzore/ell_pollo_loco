@@ -64,8 +64,9 @@ class Character extends MoveableObject {
     ];
 
     world;
-    walkingSound = new Audio('./audio/walking.mp3');
+
     snoringSound = new Audio('./audio/snoring.mp3');
+    ouchSound = new Audio('./audio/ouch.mp3');
 
     /**
      * constructor always run one time when class be created
@@ -90,7 +91,7 @@ class Character extends MoveableObject {
      */
     animate() {
         setInterval(() => {
-            this.walkingSound.pause();
+            walkingSound.pause();
             if (this.canCharacterMoveRight()) {
                 this.characterMoveRight();
             }
@@ -181,12 +182,14 @@ class Character extends MoveableObject {
      */
     playCharacterImages() {
         this.snoringSound.pause();
+        this.ouchSound.pause();
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
-            this.walkingSound.pause();
+            walkingSound.pause();
         }
         else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
+            this.ouchSound.play();
         }
         else if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
@@ -208,7 +211,7 @@ class Character extends MoveableObject {
      */
     playWalkingSound() {
         if (!muted) {
-            this.walkingSound.play();
+            walkingSound.play();
         }
     }
 

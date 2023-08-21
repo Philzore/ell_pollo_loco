@@ -7,6 +7,7 @@ let muted = false;
 let backroundMusic = new Audio('./audio/backround.mp3');
 let looseSound = new Audio('./audio/loose.mp3');
 let winSound = new Audio('./audio/win.mp3');
+let walkingSound = new Audio('./audio/walking.mp3');
 
 /**
  * Eventlistener when screen size changed
@@ -125,6 +126,7 @@ function endGameWin () {
     document.getElementById('end-screen-win').classList.remove('d-none');
     if (!muted) {
         backroundMusic.pause();
+        walkingSound.pause();
         winSound.play();
     } else {
         winSound.pause();
@@ -140,6 +142,7 @@ function endGame() {
     document.getElementById('end-screen-loose').classList.remove('d-none');
     
     backroundMusic.pause();
+    walkingSound.pause();
     if (!muted) {
         looseSound.play();
     } else {
@@ -169,15 +172,13 @@ function soundOnOff() {
     if (muted) {
         soundImage.src = './img/0_hud/volume-off.svg';
         muted = false;
-        console.log('false');
+        backroundMusic.play();
     } else {
         soundImage.src = './img/0_hud/volume.svg';
         muted = true;
-        console.log('true');
         backroundMusic.pause();
     }
 
-    console.log('world mute = ' + muted); 
 }
 
 /**

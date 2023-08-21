@@ -119,12 +119,12 @@ class World {
     }
 
     /**
-     * do when colliding course is from top
+     * do when colliding course is from top, not working on the endboss
      * 
      * @param {object} enemy which current colliding 
      */
     characterCollidingTop(enemy) {
-        if (this.character.isCollidingTop(enemy)) {
+        if (this.character.isCollidingTop(enemy) && !(enemy instanceof Endboss)) {
             this.character.jump();
             enemy.hit();
 
