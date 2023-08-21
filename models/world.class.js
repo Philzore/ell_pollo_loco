@@ -17,6 +17,7 @@ class World {
     coinSound = new Audio('./audio/coin.mp3');
     bottleSound = new Audio('./audio/bottle.mp3');
     chickenHitSound = new Audio('./audio/chicken.mp3');
+    splashSound = new Audio ('./audio/splash.mp3');
 
     enemyIsHit = false;
 
@@ -147,7 +148,9 @@ class World {
         enemy.hit();
         this.enemyIsHit = true;
         bottle.splash = true;
-        
+        if (!muted) {
+            this.splashSound.play();
+        }
         setTimeout(() => {
             this.deleteAfterCollision(this.throwableObject, bottle);
             this.enemyIsHit = false;
@@ -311,7 +314,6 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
 
         if (mo.reverse) {
             this.flipImageBack(mo);

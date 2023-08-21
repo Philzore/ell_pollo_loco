@@ -197,7 +197,7 @@ function setFullScreen() {
  */
 function enterFullscreen(element) {
     
-    if (document.getElementById('fullscreen-btn-img').src == 'http://127.0.0.1:5500/img/0_hud/fullscreen.svg') {
+    if (document.getElementById('fullscreen-btn-img').src == 'https://philipp-moessl.developerakademie.net/pollo_locco/img/0_hud/fullscreen.svg') {
 
         if (element.requestFullscreen) {
             element.requestFullscreen();
