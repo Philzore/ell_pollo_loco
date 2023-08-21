@@ -41,6 +41,11 @@ class StatusBarEndboss extends DrawableObject {
 
     }
 
+    /**
+     * find index of an image
+     * 
+     * @returns number
+     */
     findImageIndex() {
         if (this.percentage == 100) {
             return 5;
@@ -57,6 +62,10 @@ class StatusBarEndboss extends DrawableObject {
         }
     }
 
+    /**
+     * move the status bar with the boss if the character have first contact
+     * 
+     */
     animate() {
         let bossFirstContact = false;
         setInterval(() => {
@@ -71,6 +80,10 @@ class StatusBarEndboss extends DrawableObject {
 
     }
 
+    /**
+     * movel statusbar to the left
+     * 
+     */
     moveWithBoss() {
         this.x -= this.speed;
     }

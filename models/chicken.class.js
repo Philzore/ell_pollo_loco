@@ -31,9 +31,12 @@ class Chicken extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * animate chicken play images dead or walking and move left
+     * 
+     */
     animate() {
         setInterval(() => {
-
             if (this.isDead() ) {
                 this.speed = 0 ;
                 this.playAnimation(this.IMAGES_DEAD) ;

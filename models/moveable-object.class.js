@@ -18,6 +18,11 @@ class MoveableObject extends DrawableObject {
 
     onCollisionCourse;
 
+    /**
+     * play the array length all images
+     * 
+     * @param {array} images array where img src are included
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length; // let i = 0 % 6 
         let path = images[i];
@@ -25,25 +30,46 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
     }
 
+    /**
+     * let the object move right
+     * 
+     */
     moveRight() {
         this.x += this.speed;
         this.reverse = false;
     }
 
+    /**
+     * let the object move right
+     * 
+     */
     moveLeft() {
         this.x -= this.speed;
     }
 
+    /**
+     * get the time from the last movement
+     * 
+     */
     getTimeLastMove() {
         this.lastMove = new Date().getTime();
     }
 
+    /**
+     * when the character not moving longer then tree seconds , play snooze animation
+     * 
+     * @returns true or false
+     */
     checkSnooze() {
         let timePassed = new Date().getTime() - this.lastMove; //difference in ms
         timePassed = timePassed / 1000; //difference in seconds
         return timePassed > 3;
     }
 
+    /**
+     * set gravity to let objects fall down
+     * 
+     */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -53,6 +79,11 @@ class MoveableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+    /**
+     * check if an object is above ground
+     * 
+     * @returns true or false
+     */
     isAboveGround() {
         if (this instanceof ThrowableObject) { //throwableObject allways fall
             return true;
@@ -61,6 +92,12 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+    /**
+     * check if collision come from the top (y)
+     * 
+     * @param {object} obj where the collision need to be checked
+     * @returns true or false
+     */
     isCollidingTop(obj) {
         return (this.x + this.width - this.offset.right) >= obj.x + obj.offset.left && this.x + this.offset.left <= (obj.x + obj.width - obj.offset.right) && 
         (this.y  + this.height - this.offset.bottom) >= obj.y + obj.offset.top && (this.y + this.offset.top) <= (obj.y + obj.height - obj.offset.bottom) && 
@@ -68,16 +105,23 @@ class MoveableObject extends DrawableObject {
 
     }
 
+    /**
+     * check if collision come from the side (x)
+     * 
+     * @param {object} obj where the collision need to be checked
+     * @returns true or false
+     */
     isColliding(obj) {
         return (this.x + this.width - this.offset.right) >= obj.x + obj.offset.left &&
             this.x + this.offset.left <= (obj.x + obj.width - obj.offset.right) &&
             (this.y  + this.height - this.offset.bottom) >= obj.y + obj.offset.top &&
             (this.y + this.offset.top) <= (obj.y + obj.height - obj.offset.bottom);
-        //&&
-        //obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-
     }
 
+    /**
+     * slice the energy from an object
+     * 
+     */
     hit() {
         this.energy -= 20;
         if (this.energy < 0) {
@@ -89,12 +133,22 @@ class MoveableObject extends DrawableObject {
 
     }
 
+    /**
+     * to play a short animation when the character is hurt
+     * 
+     * @returns true or false
+     */
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; //difference in ms
         timePassed = timePassed / 1000; //difference in seconds
         return timePassed < 1;
     }
 
+    /**
+     * check if objects energy is zero
+     * 
+     * @returns true or false
+     */
     isDead() {
         return this.energy == 0;
     }

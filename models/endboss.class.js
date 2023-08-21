@@ -13,6 +13,9 @@ class Endboss extends MoveableObject {
         left: 0
     }
 
+    i = 0;
+    bossFirstContact = false
+
     firstContactSound = new Audio('./audio/chicken_endboss.mp3');
 
     IMAGES_WALKING = [
@@ -71,37 +74,53 @@ class Endboss extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * animate the endboss
+     * 
+     */
     animate() {
-        let i = 0;
-        let bossFirstContact = false;
-
         setInterval(() => {
-            if (i < 20) {
-                this.playAnimation(this.IMAGES_ALERT);
-            }
-            else if (this.isHurt() && this.energy >= 20) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            }
-            else {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
+            this.playEndbossImages();
 
-            i++;
+            this.i++;
 
-            if (world.character.x > 2000 && !bossFirstContact) {
-                i = 0;
-                bossFirstContact = true;
-                if (!muted) {
-                    this.firstContactSound.play();
-                }
-            }
+            this.characterHaveFirstContact();
 
-            if (bossFirstContact) {
+            if (this.bossFirstContact) {
                 this.moveLeft();
             }
-
         }, 50);
+    }
+
+    /**
+     * play the correct images for the correct situation
+     * 
+     */
+    playEndbossImages() {
+        if (this.i < 20) {
+            this.playAnimation(this.IMAGES_ALERT);
+        }
+        else if (this.isHurt() && this.energy >= 20) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+        }
+        else {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }
+
+    /**
+     * check if character have first contact with endboss
+     * 
+     */
+    characterHaveFirstContact() {
+        if (world.character.x > 2000 && !this.bossFirstContact) {
+            this.i = 0;
+            this.bossFirstContact = true;
+            if (!muted) {
+                this.firstContactSound.play();
+            }
+        }
     }
 }

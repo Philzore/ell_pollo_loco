@@ -37,6 +37,11 @@ class StatusBarBottle extends DrawableObject {
 
     }
 
+    /**
+     * find index of an image
+     * 
+     * @returns number
+     */
     findImageIndex() {
         if (this.percentage == 100) {
             return 5;

@@ -35,6 +35,11 @@ class ThrowableObject extends MoveableObject {
         this.throw(reverse);
     }
 
+    /**
+     * let the bottle throw
+     * 
+     * @param {bool} reverse for the throw direction
+     */
     throw(reverse) {
         this.speedY = 30;
         this.applyGravity();
@@ -52,6 +57,10 @@ class ThrowableObject extends MoveableObject {
         }, 25);
     }
 
+    /**
+     * splash the bottle when contact with enemy
+     * 
+     */
     splash() {
         this.splash = true ;
     }

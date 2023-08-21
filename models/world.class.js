@@ -36,11 +36,18 @@ class World {
         
     }
 
+    /**
+     * give character instance of world to have access to the keyboard
+     * 
+     */
     setWorld() {
-        //character wird instanz von world gegeben um auf keyboard zuzugreifen
         this.character.world = this;
     }
 
+    /**
+     * run the game to check all functions
+     * 
+     */
     run() {
         setInterval(() => {
             //chekc collision
@@ -56,63 +63,128 @@ class World {
         }, 150);
     }
 
+    /**
+     * check each possible collision
+     * 
+     */
     checkCollision() {
         this.checkCollisionEnemy();
         this.checkCollisionCoin();
         this.checkCollisionBottle();
     }
 
+    /**
+     * delete a single object from the array/game
+     * 
+     * @param {object} obj object which need to be deleted
+     * @param {number} item which position in the array
+     */
     deleteAfterCollision(obj, item) {
         obj.splice(obj.indexOf(item), 1)
     }
 
+    /**
+     * check collision with enemies
+     * 
+     */
     checkCollisionEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.onCollisionCourse == 'x') {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
-            }
-            if (this.character.isCollidingTop(enemy)) {
-                this.character.jump();
-                enemy.hit();
 
-                if (!muted) {
-                    this.chickenHitSound.play();
-                }
-                setTimeout(() => {
-                    this.deleteAfterCollision(this.level.enemies, enemy);
-                }, 500);
-            }
+            this.characterCollidingBySide(enemy);
+            this.characterCollidingTop(enemy);
+
             this.throwableObject.forEach((bottle) => {
 
                 if (bottle.isColliding(enemy) && !this.enemyIsHit) {
-                    enemy.hit();
-                    this.enemyIsHit = true;
-                    bottle.splash = true;
                     
-                    setTimeout(() => {
-                        this.deleteAfterCollision(this.throwableObject, bottle);
-                        this.enemyIsHit = false;
-                    }, 500);
-
-                    if (enemy.isDead()) {
-                        setTimeout(() => {
-                            this.deleteAfterCollision(this.level.enemies, enemy);
-                        }, 500);
-
-                    }
-                    if (enemy instanceof Endboss) {
-                        this.statusBarEndboss.setPercentage(enemy.energy);
-                        if (enemy.energy == 0) {
-                            this.statusBarEndboss.stopMoving = true ;
-                        }
-                    }
+                    this.bottleCollidingWithEnemy(enemy,bottle);
+                    this.checkEnemyIsDead(enemy) ;
+                    this.stoppStatusBarEndboss(enemy);
                 }
             });
 
         });
     }
 
+    /**
+     * do when colliding course is by side
+     * 
+     * @param {object} enemy which current colliding 
+     */
+    characterCollidingBySide(enemy) {
+        if (this.character.isColliding(enemy) && this.character.onCollisionCourse == 'x') {
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.energy);
+        }
+    }
+
+    /**
+     * do when colliding course is from top
+     * 
+     * @param {object} enemy which current colliding 
+     */
+    characterCollidingTop(enemy) {
+        if (this.character.isCollidingTop(enemy)) {
+            this.character.jump();
+            enemy.hit();
+
+            if (!muted) {
+                this.chickenHitSound.play();
+            }
+            setTimeout(() => {
+                this.deleteAfterCollision(this.level.enemies, enemy);
+            }, 500);
+        }
+    }
+
+    /**
+     * slice the enemy energy, let the bottle splash and delete it after 500ms
+     * 
+     * @param {object} enemy which enemy current colliding
+     * @param {object} bottle with bottle is colliding
+     */
+    bottleCollidingWithEnemy(enemy,bottle) {
+        enemy.hit();
+        this.enemyIsHit = true;
+        bottle.splash = true;
+        
+        setTimeout(() => {
+            this.deleteAfterCollision(this.throwableObject, bottle);
+            this.enemyIsHit = false;
+        }, 500);
+    }
+
+    /**
+     * check if enemy is dead if yes, delete it
+     * 
+     * @param {object} enemy which current colliding 
+     */
+    checkEnemyIsDead(enemy) {
+        if (enemy.isDead()) {
+            setTimeout(() => {
+                this.deleteAfterCollision(this.level.enemies, enemy);
+            }, 500);
+        }
+    }
+
+    /**
+     * when endboss is dead, stop the stausbar from endboss
+     * 
+     * @param {object} enemy which current colliding 
+     */
+    stoppStatusBarEndboss(enemy) {
+        if (enemy instanceof Endboss) {
+            this.statusBarEndboss.setPercentage(enemy.energy);
+            if (enemy.energy == 0) {
+                this.statusBarEndboss.stopMoving = true ;
+            }
+        }
+    }
+
+    /**
+     * check collision with coins
+     * 
+     */
     checkCollisionCoin() {
         let i = 0;
         this.level.coins.forEach((coin) => {
@@ -122,9 +194,7 @@ class World {
                 }
 
                 this.character.coinStatus += 20;
-
                 this.deleteAfterCollision(this.level.coins, coin);
-
                 this.statusBarCoins.setPercentage(this.character.coinStatus);
 
                 if (this.character.coinStatus > 100) {
@@ -136,6 +206,10 @@ class World {
         });
     }
 
+    /**
+     * check collision with bottles
+     * 
+     */
     checkCollisionBottle() {
         let i = 0;
         this.level.bottles.forEach((bottle) => {
@@ -144,8 +218,8 @@ class World {
                 if (!muted) {
                     this.bottleSound.play();
                 }
-                this.level.bottles.splice(i, 1);
 
+                this.level.bottles.splice(i, 1);
                 this.statusBarBottle.setPercentage(this.character.bottleStatus);
 
                 if (this.character.bottleStatus > 100) {
@@ -157,6 +231,10 @@ class World {
         });
     }
 
+    /**
+     * check if character can throw a bottle
+     * 
+     */
     checkThrow() {
         if (this.keyboard.d) {
 
@@ -173,6 +251,10 @@ class World {
         }
     }
 
+    /**
+     * draw all objects on the canvas
+     * 
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -206,6 +288,11 @@ class World {
         });
     }
 
+    /**
+     * add an object array to the canvas
+     * 
+     * @param {array} objects for the canvas
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
@@ -213,6 +300,11 @@ class World {
         });
     }
 
+    /**
+     * add a single object to the canvas
+     * 
+     * @param {object} mo single moveable-object 
+     */
     addToMap(mo) {
         if (mo.reverse) {
             this.flipImage(mo);
@@ -226,6 +318,11 @@ class World {
         }
     }
 
+    /**
+     * flip character image when you move left
+     * 
+     * @param {object} mo single moveable-object 
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -233,6 +330,11 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+     * flip the character image back when you move right
+     * 
+     * @param {object} mo single moveable-object
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();

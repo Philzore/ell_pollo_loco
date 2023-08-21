@@ -37,6 +37,11 @@ class StatusBar extends DrawableObject {
 
     }
 
+    /**
+     * find index of an image
+     * 
+     * @returns number
+     */
     findImageIndex() {
         if (this.percentage == 100) {
             return 5;
@@ -52,7 +57,4 @@ class StatusBar extends DrawableObject {
             return 0;
         }
     }
-
-    //TODO
-
 }
