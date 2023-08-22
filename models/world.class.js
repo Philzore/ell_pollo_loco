@@ -17,7 +17,7 @@ class World {
     coinSound = new Audio('./audio/coin.mp3');
     bottleSound = new Audio('./audio/bottle.mp3');
     chickenHitSound = new Audio('./audio/chicken.mp3');
-    splashSound = new Audio ('./audio/splash.mp3');
+    splashSound = new Audio('./audio/splash.mp3');
 
     enemyIsHit = false;
 
@@ -34,7 +34,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        
+
     }
 
     /**
@@ -52,9 +52,15 @@ class World {
     run() {
         setInterval(() => {
             //chekc collision
-            this.checkCollision();
+            this.checkCollisionCoin();
+            this.checkCollisionBottle();
+        }, 50);
+        setInterval(() => {
             //check key d for throw
             this.checkThrow();
+        }, 200);
+        setInterval(() => {
+            this.checkCollisionEnemy();
             //check dead
             if (this.character.isDead()) {
                 endGame();
@@ -65,23 +71,13 @@ class World {
     }
 
     /**
-     * check each possible collision
-     * 
-     */
-    checkCollision() {
-        this.checkCollisionEnemy();
-        this.checkCollisionCoin();
-        this.checkCollisionBottle();
-    }
-
-    /**
      * delete a single object from the array/game
      * 
      * @param {object} obj object which need to be deleted
      * @param {number} item which position in the array
      */
     deleteAfterCollision(obj, item) {
-        obj.splice(obj.indexOf(item), 1)
+        obj.splice(obj.indexOf(item), 1);
     }
 
     /**
@@ -97,9 +93,9 @@ class World {
             this.throwableObject.forEach((bottle) => {
 
                 if (bottle.isColliding(enemy) && !this.enemyIsHit) {
-                    
-                    this.bottleCollidingWithEnemy(enemy,bottle);
-                    this.checkEnemyIsDead(enemy) ;
+
+                    this.bottleCollidingWithEnemy(enemy, bottle);
+                    this.checkEnemyIsDead(enemy);
                     this.stoppStatusBarEndboss(enemy);
                 }
             });
@@ -144,7 +140,7 @@ class World {
      * @param {object} enemy which enemy current colliding
      * @param {object} bottle with bottle is colliding
      */
-    bottleCollidingWithEnemy(enemy,bottle) {
+    bottleCollidingWithEnemy(enemy, bottle) {
         enemy.hit();
         this.enemyIsHit = true;
         bottle.splash = true;
@@ -154,7 +150,7 @@ class World {
         setTimeout(() => {
             this.deleteAfterCollision(this.throwableObject, bottle);
             this.enemyIsHit = false;
-        }, 500);
+        }, 200);
     }
 
     /**
@@ -179,7 +175,7 @@ class World {
         if (enemy instanceof Endboss) {
             this.statusBarEndboss.setPercentage(enemy.energy);
             if (enemy.energy == 0) {
-                this.statusBarEndboss.stopMoving = true ;
+                this.statusBarEndboss.stopMoving = true;
             }
         }
     }
@@ -260,35 +256,66 @@ class World {
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         //translate ist verschieben um bestimmten Wert
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.level.backroundObject);
-        this.addToMap(this.character);
+        this.drawBackroundAndCharacter();
 
         this.ctx.translate(-this.camera_x, 0); // back
         // --- space for fixed objects ---
-        this.addToMap(this.statusBar);
-        this.addToMap(this.statusBarCoins);
-        this.addToMap(this.statusBarBottle);
-        
+        this.drawFixedObjects();
         this.ctx.translate(this.camera_x, 0); // forward
+
         this.addToMap(this.statusBarEndboss);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.throwableObject);
-        this.addObjectsToMap(this.level.clouds);
+        this.drawInteractableItems();
 
         this.ctx.translate(-this.camera_x, 0);
 
+        this.requestFrame();
+    }
+
+    /**
+     * call draw function how often your pc can do it
+     * 
+     */
+    requestFrame() {
         //draw wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
             //er kennt kein this mehr und deswegen wird die variable self erstellt
             self.draw();
         });
+    }
+
+    /**
+     * add backround and character img to canvas
+     * 
+     */
+    drawBackroundAndCharacter() {
+        this.addObjectsToMap(this.level.backroundObject);
+        this.addObjectsToMap(this.level.clouds);
+        this.addToMap(this.character);
+    }
+
+    /**
+     * add fixed objects to canvas
+     * 
+     */
+    drawFixedObjects() {
+        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottle);
+    }
+
+    /**
+     * add interactable items to canvas
+     * 
+     */
+    drawInteractableItems() {
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.throwableObject);
     }
 
     /**

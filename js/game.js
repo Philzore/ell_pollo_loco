@@ -13,7 +13,17 @@ let walkingSound = new Audio('./audio/walking.mp3');
  * Eventlistener when screen size changed
  * 
  */
-addEventListener('resize' , checkDeviceWidth) ;
+addEventListener('resize', checkDeviceWidth);
+
+/**
+ * Eventlistener when fullscreen change with escape button
+ * 
+ */
+addEventListener('fullscreenchange', (event) => {
+    if (!document.fullscreen) {
+        removeFullViewClass();
+    };
+});
 
 /**
  * initialize the game
@@ -42,7 +52,7 @@ function checkDeviceWidth() {
     } else {
         document.getElementById('turn-device-screen').classList.add('d-none');
     }
-    
+
 }
 
 /**
@@ -122,7 +132,7 @@ function removeStartScreen() {
  * show win screen and clear intervals
  * 
  */
-function endGameWin () {
+function endGameWin() {
     document.getElementById('end-screen-win').classList.remove('d-none');
     if (!muted) {
         backroundMusic.pause();
@@ -140,7 +150,7 @@ function endGameWin () {
  */
 function endGame() {
     document.getElementById('end-screen-loose').classList.remove('d-none');
-    
+
     backroundMusic.pause();
     walkingSound.pause();
     if (!muted) {
@@ -148,7 +158,7 @@ function endGame() {
     } else {
         looseSound.pause();
     }
-    
+
     clearIntervals();
 }
 
@@ -157,9 +167,9 @@ function endGame() {
  * 
  */
 function clearIntervals() {
-     for (let i = 0; i < 9999; i++) {
+    for (let i = 0; i < 9999; i++) {
         window.clearInterval(i);
-     }
+    }
 }
 
 /**
@@ -196,7 +206,7 @@ function setFullScreen() {
  * @param {element} element which should enter full screen 
  */
 function enterFullscreen(element) {
-    
+
     if (document.getElementById('fullscreen-btn-img').src == 'https://philipp-moessl.developerakademie.net/pollo_locco/img/0_hud/fullscreen.svg') {
 
         if (element.requestFullscreen) {

@@ -92,25 +92,22 @@ class Character extends MoveableObject {
     animate() {
         setInterval(() => {
             walkingSound.pause();
-            if (this.canCharacterMoveRight()) {
-                this.characterMoveRight();
+            if (this.canCharacterMoveRight()) { 
+                this.characterMoveRight(); 
             }
             if (this.canCharacterMoveLeft()) {
                 this.characterMoveLeft();
             }
-
             if (this.canCharacterJump()) {
                 this.jump();
             }
-
             this.setCollisionCourse();
-
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
             this.playCharacterImages();
-        }, 50);
+        }, 100);
 
     }
 
@@ -181,17 +178,14 @@ class Character extends MoveableObject {
      * 
      */
     playCharacterImages() {
-        this.snoringSound.pause();
-        this.ouchSound.pause();
+        this.soundPause();
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
             walkingSound.pause();
         }
         else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
-            if (!muted) {
-                this.ouchSound.play();
-            }
+            this.playSound(this.ouchSound);
         }
         else if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
@@ -201,9 +195,27 @@ class Character extends MoveableObject {
         }
         else if (this.checkSnooze()) {
             this.playAnimation(this.IMAGES_LONG_IDLE);
-            if (!muted) {
-                this.snoringSound.play();
-            }
+            this.playSound(this.snoringSound);
+        }
+    }
+
+    /**
+     * pause the sounds
+     * 
+     */
+    soundPause() {
+        this.snoringSound.pause();
+        this.ouchSound.pause();
+    }
+
+    /**
+     * play a specific sound
+     * 
+     * @param {Audio} soundFile which should played
+     */
+    playSound(soundFile) {
+        if (!muted) {
+            soundFile.play();
         }
     }
 

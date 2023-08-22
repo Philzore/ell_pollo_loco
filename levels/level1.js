@@ -25,7 +25,12 @@ level1 = new level(
     [
         new Cloud()
     ],
-    [
+    createBackroundImages()
+);
+}
+
+function createBackroundImages() {
+    return [
         new BackroundObject('./img/5_background/layers/air.png', -719),
         new BackroundObject('./img/5_background/layers/3_third_layer/2.png', -719),
         new BackroundObject('./img/5_background/layers/2_second_layer/2.png', -719),
@@ -47,5 +52,4 @@ level1 = new level(
         new BackroundObject('./img/5_background/layers/2_second_layer/2.png', 719*3),
         new BackroundObject('./img/5_background/layers/1_first_layer/2.png', 719*3) 
     ]
-);
 }
