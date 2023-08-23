@@ -13,6 +13,9 @@ class Character extends MoveableObject {
         left: 50
     }
 
+    currentJumpingImage = 1;
+    state = '';
+
     IMAGES_WALKING = [
         './img/2_character_pepe/2_walk/W-21.png',
         './img/2_character_pepe/2_walk/W-22.png',
@@ -90,10 +93,19 @@ class Character extends MoveableObject {
      * 
      */
     animate() {
+        this.intervalCharacterMoving();
+        this.intervalCharacterImages();
+    }
+
+    /**
+     * interval for character moving
+     * 
+     */
+    intervalCharacterMoving() {
         setInterval(() => {
             walkingSound.pause();
-            if (this.canCharacterMoveRight()) { 
-                this.characterMoveRight(); 
+            if (this.canCharacterMoveRight()) {
+                this.characterMoveRight();
             }
             if (this.canCharacterMoveLeft()) {
                 this.characterMoveLeft();
@@ -104,11 +116,16 @@ class Character extends MoveableObject {
             this.setCollisionCourse();
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
+    }
 
+    /**
+     * interval to play character images
+     * 
+     */
+    intervalCharacterImages() {
         setInterval(() => {
             this.playCharacterImages();
         }, 100);
-
     }
 
     /**
@@ -179,23 +196,76 @@ class Character extends MoveableObject {
      */
     playCharacterImages() {
         this.soundPause();
+
         if (this.isDead()) {
-            this.playAnimation(this.IMAGES_DEAD);
-            walkingSound.pause();
+            this.whenDead();
+        } else if (this.isHurt()) {
+            this.whenHurt();
+        } else if (this.isAboveGround()) {
+            this.whenIsAboveGround();
+        } else if (this.world.keyboard.right || this.world.keyboard.left) {
+            this.whenWalking();
+        } else if (this.checkSnooze()) {
+            this.whenNoMovement();
         }
-        else if (this.isHurt()) {
-            this.playAnimation(this.IMAGES_HURT);
-            this.playSound(this.ouchSound);
-        }
-        else if (this.isAboveGround()) {
-            this.playAnimation(this.IMAGES_JUMPING);
-        }
-        else if (this.world.keyboard.right || this.world.keyboard.left) {
-            this.playAnimation(this.IMAGES_WALKING);
-        }
-        else if (this.checkSnooze()) {
-            this.playAnimation(this.IMAGES_LONG_IDLE);
-            this.playSound(this.snoringSound);
+    }
+
+    /**
+     * do when character is dead
+     * 
+     */
+    whenDead() {
+        this.playAnimation(this.IMAGES_DEAD);
+        walkingSound.pause();
+
+    }
+
+    /**
+     * do when character is hurt
+     * 
+     */
+    whenHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        this.playSound(this.ouchSound);
+
+    }
+
+    /**
+     * do when character is above ground
+     * 
+     */
+    whenIsAboveGround() {
+        this.playJumpAnimation();
+        this.currentJumpingImage++;
+
+    }
+
+    /**
+     * do when character is walking
+     * 
+     */
+    whenWalking() {
+        this.playAnimation(this.IMAGES_WALKING);
+
+    }
+
+    /**
+     * do when character stay for a while
+     * 
+     */
+    whenNoMovement() {
+        this.playAnimation(this.IMAGES_LONG_IDLE);
+        this.playSound(this.snoringSound);
+
+    }
+
+    /**
+     * play the jumping images only once
+     * 
+     */
+    playJumpAnimation() {
+        if (this.currentJumpingImage < 8 && this.isAboveGround()) {
+            this.loadImage(`./img/2_character_pepe/3_jump/J-3${this.currentJumpingImage}.png`);
         }
     }
 
@@ -234,6 +304,7 @@ class Character extends MoveableObject {
      * 
      */
     jump() {
+        this.currentJumpingImage = 1;
         this.speedY = 30;
     }
 }

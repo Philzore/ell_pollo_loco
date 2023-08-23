@@ -47,7 +47,7 @@ class ThrowableObject extends MoveableObject {
             if (reverse == false && !this.splash) {
                 this.playAnimation(this.IMAGES_ROTATION);
                 this.x += 10;
-            } else if (reverse == true && !splash) {
+            } else if (reverse == true && !this.splash) {
                 this.playAnimation(this.IMAGES_ROTATION);
                 this.x -= 10;
             } else if (this.splash) {

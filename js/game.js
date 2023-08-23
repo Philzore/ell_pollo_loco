@@ -39,7 +39,12 @@ function init() {
  * 
  */
 function reloadPage() {
-    location.reload();
+    
+    clearIntervals();
+    document.getElementById('start-screen').classList.remove('d-none');
+    document.getElementById('end-screen-loose').classList.add('d-none');
+    document.getElementById('end-screen-win').classList.add('d-none');
+
 }
 
 /**

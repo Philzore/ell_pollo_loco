@@ -246,12 +246,21 @@ h1 {
     fill-opacity: 0.5;
 }
 
+.introduction-text {
+    margin-top: 20px;
+    font-size: 48px;
+}
+
 @media (max-width: 720px) {
     canvas {
         width: 100%;
     }
 
     .introduction {
+        display: none;
+    }
+
+    .introduction-text {
         display: none;
     }
 }

@@ -50,15 +50,39 @@ class World {
      * 
      */
     run() {
+        this.intervalCollisionCoinAndBottle();
+        this.intervalCheckThrow();
+        this.intervalCollisionEnemyAndEndGame();
+    }
+
+    /**
+     * interval for collision with coins and bottles
+     * 
+     */
+    intervalCollisionCoinAndBottle() {
         setInterval(() => {
             //chekc collision
             this.checkCollisionCoin();
             this.checkCollisionBottle();
         }, 50);
+    }
+
+    /**
+     * interval for throw bottles
+     * 
+     */
+    intervalCheckThrow() {
         setInterval(() => {
             //check key d for throw
             this.checkThrow();
         }, 200);
+    }
+
+    /**
+     * interval for collision with enemies and end game
+     * 
+     */
+    intervalCollisionEnemyAndEndGame() {
         setInterval(() => {
             this.checkCollisionEnemy();
             //check dead
@@ -86,12 +110,10 @@ class World {
      */
     checkCollisionEnemy() {
         this.level.enemies.forEach((enemy) => {
-
             this.characterCollidingBySide(enemy);
             this.characterCollidingTop(enemy);
 
             this.throwableObject.forEach((bottle) => {
-
                 if (bottle.isColliding(enemy) && !this.enemyIsHit) {
 
                     this.bottleCollidingWithEnemy(enemy, bottle);
@@ -99,7 +121,6 @@ class World {
                     this.stoppStatusBarEndboss(enemy);
                 }
             });
-
         });
     }
 
@@ -185,24 +206,30 @@ class World {
      * 
      */
     checkCollisionCoin() {
-        let i = 0;
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 if (!muted) {
                     this.coinSound.play();
                 }
 
-                this.character.coinStatus += 20;
-                this.deleteAfterCollision(this.level.coins, coin);
-                this.statusBarCoins.setPercentage(this.character.coinStatus);
-
-                if (this.character.coinStatus > 100) {
-                    this.character.coinStatus = 100;
-                }
-                i = 0;
+                this.setNewCoinStatus(coin);
             }
-            i++;
         });
+    }
+
+    /**
+     * set new status of coins
+     * 
+     * @param {object} coin which need to be deleted
+     */
+    setNewCoinStatus(coin) {
+        this.character.coinStatus += 20;
+        this.deleteAfterCollision(this.level.coins, coin);
+        this.statusBarCoins.setPercentage(this.character.coinStatus);
+
+        if (this.character.coinStatus > 100) {
+            this.character.coinStatus = 100;
+        }
     }
 
     /**
@@ -210,7 +237,7 @@ class World {
      * 
      */
     checkCollisionBottle() {
-        let i = 0;
+        
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.bottleStatus += 20;
@@ -218,16 +245,23 @@ class World {
                     this.bottleSound.play();
                 }
 
-                this.level.bottles.splice(i, 1);
-                this.statusBarBottle.setPercentage(this.character.bottleStatus);
-
-                if (this.character.bottleStatus > 100) {
-                    this.character.bottleStatus = 100;
-                }
-                i = 0;
+                this.setNewBottleStatus(bottle);
             }
-            i++;
         });
+    }
+
+    /**
+     * set new bottle status
+     * 
+     * @param {object} bottle which bottle need to be deleted
+     */
+    setNewBottleStatus(bottle) {
+        this.deleteAfterCollision(this.level.bottles, bottle);
+        this.statusBarBottle.setPercentage(this.character.bottleStatus);
+
+        if (this.character.bottleStatus > 100) {
+            this.character.bottleStatus = 100;
+        }
     }
 
     /**
